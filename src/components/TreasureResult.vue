@@ -11,11 +11,3 @@
   };
   </script>
   
-  <style scoped>
-  .treasure-result {
-    text-align: center;
-    margin-top: 5rem;
-    margin-bottom: 5rem;
-  }
-  </style>
-  

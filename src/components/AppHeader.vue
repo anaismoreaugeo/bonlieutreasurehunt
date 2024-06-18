@@ -1,6 +1,6 @@
 <template>
     <header class="header">
-      <h1>Mon Site</h1>
+      <p>La chasse aux totems</p>
     </header>
   </template>
   

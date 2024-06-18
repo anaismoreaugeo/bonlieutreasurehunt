@@ -1,15 +1,17 @@
-/* src/styles/main.scss */
 $header-height: 60px;
 $footer-height: 60px;
 $header-bg-color: #333;
 $footer-bg-color: #333;
 $text-color: white;
 
-body {
+body, #app {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   font-family: Avenir, Helvetica, Arial, sans-serif;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 .header {
@@ -20,12 +22,21 @@ body {
   background-color: $header-bg-color;
   color: $text-color;
   text-align: center;
-  padding: 1rem;
+  line-height: $header-height;
+  z-index: 1000;
+  box-sizing: border-box;
 }
 
 main {
+  flex: 1;
   padding-top: $header-height; 
   padding-bottom: $footer-height; 
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .footer {
@@ -34,10 +45,13 @@ main {
   position: fixed;
   bottom: 0;
   width: 100%;
+  height: $footer-height;
   background-color: $footer-bg-color;
   color: $text-color;
   text-align: center;
   padding: 0;
+  z-index: 1000;
+  box-sizing: border-box;
 }
 
 .footer-btn {
@@ -71,15 +85,10 @@ main {
   color: darken($text-color, 10%);
 }
 
-.home, .hunting-result {
+.home, .hunting-result, .treasure-result {
   text-align: center;
-  margin-top: 1rem;
-  margin-bottom: 1rem;
-}
-
-.home h1 {
-  font-size: 2.5rem;
-  margin-bottom: 2rem;
+  margin-top: 0;
+  margin-bottom: 0;
 }
 
 .code-input {
@@ -93,7 +102,7 @@ main {
 }
 
 .code-input input {
-  width: 100%;
+  width: 80%;
   max-width: 300px;
   padding: 0.5rem;
   font-size: 1rem;
@@ -130,6 +139,10 @@ main {
   display: flex;
   align-items: center;
   height: 100px;
+}
+
+.result-box.active .square {
+  background-color: green;
 }
 
 .result-box.left .square-container {
@@ -182,12 +195,6 @@ main {
   padding: 0 1rem;
 }
 
-.home {
-  text-align: center;
-  margin-top: 5rem;
-  margin-bottom: 5rem;
-}
-
 .home h1 {
   font-size: 2.5rem;
   margin-bottom: 2rem;
@@ -207,7 +214,7 @@ main {
 }
 
 .code-input input {
-  width: 100%;
+  width: 80%;
   max-width: 300px;
   padding: 0.5rem;
   font-size: 1rem;
@@ -222,10 +229,40 @@ main {
 }
 
 .scanner-placeholder {
-  width: 100%;
+  width: 80%;
   height: 50px;
   background-color: #f0f0f0;
   border: 2px dashed #ccc;
   text-align: center;
   line-height: 50px;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: white;
+  border-radius: 5px;
+  padding: 1rem;
+  width: 80%;
+  max-width: 500px;
+}
+
+.modal-header {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.modal-body {
+  font-size: 1rem;
 }

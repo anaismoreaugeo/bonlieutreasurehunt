@@ -61,8 +61,3 @@ export default {
 };
 </script>
 
-<style scoped>
-.result-box.active .square {
-  background-color: green;
-}
-</style>

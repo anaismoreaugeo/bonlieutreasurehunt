@@ -1,11 +1,10 @@
 <template>
-  <div id="app">
+  
     <AppHeader />
     <main>
       <router-view></router-view>
     </main>
     <AppFooter />
-  </div>
 </template>
 
 <script>

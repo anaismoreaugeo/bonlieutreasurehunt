@@ -1,5 +1,4 @@
 <template>
-  <main>
     <div class="home">
       <h1>Totem</h1>
       <div class="code-input">
@@ -19,7 +18,6 @@
         <component :is="currentComponent"></component>
       </template>
     </AppModal>
-  </main>
 </template>
 
 <script>
