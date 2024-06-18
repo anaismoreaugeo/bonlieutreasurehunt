@@ -1,5 +1,5 @@
 <template>
-  <BaseTotem title="Jeu Totem 1" description="Ceci est le contenu du mini-jeu pour Totem 1." />
+  <BaseTotem title="Jeu Totem 1" description="Ceci est le contenu du mini-jeu pour Totem 1." totem="totem1" />
 </template>
 
 <script>

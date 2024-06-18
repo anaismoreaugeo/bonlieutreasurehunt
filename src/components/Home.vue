@@ -23,7 +23,6 @@
   </template>
   
   <script>
-  import { totemCodes } from '../totemCodes';
   import AppModal from '../components/AppModal.vue';
   import AppTotem1 from '../components/Games/AppTotem1.vue';
   import AppTotem2 from '../components/Games/AppTotem2.vue';
@@ -49,13 +48,27 @@
     },
     methods: {
       checkCode() {
-        const totem = Object.keys(totemCodes).find(key => totemCodes[key] === this.code);
+        const totem = this.getTotemByCode(this.code);
         if (totem) {
           this.modalHeader = `Faites le chemin pour débloquer le ${totem}`;
           this.currentComponent = this.getComponent(totem);
           this.isModalOpen = true;
         } else {
           alert("Code incorrect, veuillez réessayer.");
+        }
+      },
+      getTotemByCode(code) {
+        switch (code) {
+          case 'code1':
+            return 'totem1';
+          case 'code2':
+            return 'totem2';
+          case 'code3':
+            return 'totem3';
+          case 'code4':
+            return 'totem4';
+          default:
+            return null;
         }
       },
       getComponent(totem) {
