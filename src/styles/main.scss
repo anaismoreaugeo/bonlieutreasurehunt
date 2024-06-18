@@ -1,0 +1,72 @@
+/* src/styles/main.scss */
+$header-height: 60px;
+$footer-height: 60px;
+$header-bg-color: #333;
+$footer-bg-color: #333;
+$text-color: white;
+
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+}
+
+.header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: $header-height;
+  background-color: $header-bg-color;
+  color: $text-color;
+  text-align: center;
+  padding: 1rem;
+}
+
+main {
+  padding-top: $header-height;
+  padding-bottom: $footer-height; 
+}
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background-color: $footer-bg-color;
+  color: $text-color;
+  text-align: center;
+  padding: 0;
+}
+
+.footer-btn {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem 0;
+  color: $text-color;
+  background-color: $footer-bg-color;
+  border: none;
+  cursor: pointer;
+}
+
+.footer-btn i {
+  font-size: 1.5rem;
+}
+
+.footer-btn span {
+  margin-top: 0.5rem;
+  font-size: 0.875rem;
+}
+
+.footer-btn:hover {
+  background-color: darken($footer-bg-color, 10%);
+}
+
+.footer-btn.active {
+    background-color: lighten($footer-bg-color, 10%);
+    color: darken($text-color, 10%);
+  }
