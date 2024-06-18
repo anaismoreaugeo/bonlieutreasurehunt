@@ -48,7 +48,7 @@ export default {
     checkCode() {
       const totem = this.getTotemByCode(this.code);
       if (totem) {
-        this.modalHeader = `Faites le chemin pour débloquer le ${totem}`;
+        // this.modalHeader = `Faites le chemin pour débloquer le ${totem}`;
         this.currentComponent = this.getComponent(totem);
         this.isModalOpen = true;
       } else {
