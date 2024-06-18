@@ -35,6 +35,15 @@ export default {
     validate() {
       if (this.isValidated) {
         this.$store.dispatch('activateTotem', this.totem);
+        this.checkAllTotemsActive();
+      }
+    },
+    checkAllTotemsActive() {
+      const allTotemsActive = Object.values(this.$store.state.totems).every(status => status);
+      if (allTotemsActive) {
+        this.$router.push({ name: 'TreasureResult' });
+      }
+      else {
         this.$router.push({ name: 'HuntingResult' });
       }
     }

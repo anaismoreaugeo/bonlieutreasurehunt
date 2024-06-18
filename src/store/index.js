@@ -11,12 +11,7 @@ export default createStore({
   },
   mutations: {
     activateTotem(state, totem) {
-      if (totem in state.totems) {
-        state.totems[totem] = true;
-        console.log('activateTotem called for', totem); 
-      } else {
-        console.error('Unknown totem:', totem);
-      }
+      state.totems[totem] = true;
     },
   },
   actions: {

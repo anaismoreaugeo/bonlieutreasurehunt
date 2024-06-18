@@ -55,8 +55,8 @@ export default {
   name: 'HuntingResult',
   computed: {
     isActive() {
-      return this.$store.getters.isActive;
-    }
+      return (totem) => this.$store.getters.isActive(totem);
+    },
   }
 };
 </script>
