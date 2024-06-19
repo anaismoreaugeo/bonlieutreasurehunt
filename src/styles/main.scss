@@ -278,6 +278,7 @@ main {
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
 }
 
 .center-square {
@@ -293,6 +294,17 @@ main {
 .inner-square {
   background-color: white;
   border: 1px solid #000;
+}
+
+.download-btn {
+  position: absolute;
+  top: -30px;
+  right: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 20px;
+  color: #333;
 }
 
 .bottom-dots {
@@ -360,6 +372,7 @@ main {
 
 .green-stroke {
   stroke: green;
+  
   fill: none;
   stroke-miterlimit: 10;
   stroke-width: 14px;

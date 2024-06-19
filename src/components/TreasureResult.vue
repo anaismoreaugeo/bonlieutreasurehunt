@@ -2,6 +2,9 @@
   <div class="treasure-result">
     <div class="content">
       <div class="center-square">
+        <button class="download-btn" @click="downloadImage">
+          <i class="fas fa-download"></i>
+        </button>
         <SliderSquare class="inner-square top-left" :colorClass="colors[0]" @update-last-clicked="updateLastClicked(0)" />
         <SliderSquare class="inner-square top-right" :colorClass="colors[1]" @update-last-clicked="updateLastClicked(1)" />
         <SliderSquare class="inner-square bottom-left" :colorClass="colors[2]" @update-last-clicked="updateLastClicked(2)" />
@@ -19,6 +22,7 @@
 
 <script>
 import SliderSquare from './SliderSquare.vue';
+import html2canvas from 'html2canvas';
 
 export default {
   name: 'TreasureResult',
@@ -42,6 +46,14 @@ export default {
         this.colors = updatedColors;
         this.lastClickedIndex = null; // Reset last clicked index
       }
+    },
+    async downloadImage() {
+      const element = this.$el.querySelector('.center-square');
+      const canvas = await html2canvas(element);
+      const link = document.createElement('a');
+      link.download = 'treasure-result.png';
+      link.href = canvas.toDataURL('image/png');
+      link.click();
     }
   }
 };
