@@ -1,14 +1,29 @@
-$header-height: 60px;
+@font-face {
+  font-family: 'MaisonRegular';
+  src: url('/src/styles/fonts/MaisonMG-Regular.otf') format('opentype'); 
+}
+@font-face {
+  font-family: 'MaisonBold';
+  src: url('/src/styles/fonts/MaisonMG-Regular.otf') format('opentype'); 
+}
+
+$header-height: 70px;
 $footer-height: 60px;
 $header-bg-color: #333;
 $footer-bg-color: #333;
 $text-color: white;
 
+h2 {
+  font-family: 'MaisonBold';
+  font-size: 18px;
+}
+
 body, #app {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: 'MaisonRegular';
+  font-size: 14px;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -19,12 +34,20 @@ body, #app {
   top: 0;
   width: 100%;
   height: $header-height;
-  background-color: $header-bg-color;
+  padding-left: 10%;
+  padding-right: 10%;
   color: $text-color;
   text-align: center;
   line-height: $header-height;
   z-index: 1000;
   box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  img {
+    height: calc(  $header-height - 30%);
+    place-items: center;
+    margin: 0 auto;
+  }
 }
 
 main {
@@ -93,46 +116,80 @@ main {
 .home {
   width: 100vw;
   height: 100vh;
+  h2 {
+    padding-top: 10%;
+    margin: 10px;
+  }
+  p {
+    width: 80%;
+    margin: 0 auto;
+    white-space: nowrap;
+  }
+  .line-container {
+    max-height: 20px;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    max-width: 30%;
+    margin: 0 auto;
+  }
+
+  .line {
+    flex-grow: 1;
+    border-top: 1px solid black;
+    margin: 0 10px;
+  }
+    
+  .code-input {
+    margin-bottom: 2rem;
+  }
+
+  .code-input label {
+    display: block;
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .code-input input {
+    max-width: 30%;
+    margin-top: 10px;
+    padding: 0.5rem;
+    font-size: 8px;
+    text-align: center;
+  }
+  button {
+    background-color: #333;
+    color: white;
+    font-size: 8px;
+    margin-top: 10px;
+     padding: 0.5rem 1rem;
+    border: none;
+  }
+
+  .scanner-placeholder {
+    margin-top: 10px;
+    width: 80%;
+    height: 30vh;
+    background-color: #f0f0f0;
+    border: 2px dashed #ccc;
+    display: flex;
+    text-align: center;
+    line-height: 50px;
+  }
+  
+  .scanner-icon {
+    font-size: 2rem;
+    margin: auto;
+  }
+  
+  .scanner-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 }
 
-.code-input {
-  margin-bottom: 2rem;
-}
-
-.code-input label {
-  display: block;
-  font-size: 1.25rem;
-  margin-bottom: 0.5rem;
-}
-
-.code-input input {
-  width: 80%;
-  max-width: 300px;
-  padding: 0.5rem;
-  font-size: 1rem;
-  text-align: center;
-}
-
-.scanner-placeholder {
-  width: 80%;
-  height: 30vh;
-  background-color: #f0f0f0;
-  border: 2px dashed #ccc;
-  display: flex;
-  text-align: center;
-  line-height: 50px;
-}
-
-.scanner-icon {
-  font-size: 2rem;
-  margin: auto;
-}
-
-.scanner-container{
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
 
 .hunting-result {
   padding: 1rem;
@@ -210,37 +267,11 @@ main {
   padding: 0 1rem;
 }
 
-.home h1 {
-  font-size: 2.5rem;
-  margin-bottom: 2rem;
-}
-
 .code-input {
   margin-bottom: 2rem;
   display: flex;
   flex-direction: column;
   align-items: center;
-}
-
-.code-input label {
-  display: block;
-  font-size: 1.25rem;
-  margin-bottom: 0.5rem;
-}
-
-.code-input input {
-  width: 80%;
-  max-width: 300px;
-  padding: 0.5rem;
-  font-size: 1rem;
-  text-align: center;
-  margin-bottom: 0.5rem;
-}
-
-.code-input button {
-  padding: 0.5rem 1rem;
-  font-size: 1rem;
-  cursor: pointer;
 }
 
 .modal-overlay {
@@ -258,21 +289,19 @@ main {
 
 .modal-content {
   background: white;
-  border-radius: 5px;
   padding: 1rem;
   width: 80%;
   max-width: 500px;
+  margin: 0 auto;
+  text-align: center;
+  .small {
+    font-size: 8px;
+  }
 }
 
 .modal-header {
-  font-size: 1.5rem;
   margin-bottom: 1rem;
 }
-
-.modal-body {
-  font-size: 1rem;
-}
-
 /* Styles pour TreasureResult */
 .treasure-result {
   display: flex;

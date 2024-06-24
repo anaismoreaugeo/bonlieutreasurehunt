@@ -1,17 +1,23 @@
 <template>
   <div class="home">
-    <h1>Totem</h1>
+    <h2 class="bold">LA CHASSE AUX TOTEMS EST OUVERTE ! </h2>
+    <div class="scanner-container">
+      <p>Trouvez et scannez un totem</p>
+      <div class="scanner-placeholder">
+        <img id="scanner-icon" class="scanner-icon" src="@/assets/qr-code.png" alt="Scanner" width="100" height="100" @click="toggleScanner" v-if="!isScannerActive">
+        <qrcode-stream @decode="onDecode" @detect="onDetect" v-if="isScannerActive"></qrcode-stream>
+      </div>
+    </div>
+    <div class="line-container">
+    <div class="line"></div>
+    <div >OU</div>
+    <div class="line"></div>
+  </div>
     <div class="code-input">
-      <label for="code">Entrez le code :</label>
-      <input v-model="code" type="text" id="code" name="code" placeholder="Votre code ici">
+      <p>Entrez le code</p>
+      <input v-model="code" type="text" id="code" name="code" placeholder="X X X X">
       <button @click="checkCode">Entrer</button>
     </div>
-    <div class="scanner-container">
-    <div class="scanner-placeholder">
-      <img id="scanner-icon" class="scanner-icon" src="@/assets/qr-code.png" alt="Scanner" width="100" height="100" @click="toggleScanner" v-if="!isScannerActive">
-      <qrcode-stream @decode="onDecode" @detect="onDetect" v-if="isScannerActive"></qrcode-stream>
-    </div>
-  </div>
   </div>
   <AppModal v-if="isModalOpen" @close="isModalOpen = false">
     <template #header>
