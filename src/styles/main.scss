@@ -86,11 +86,13 @@ main {
 }
 
 .home, .hunting-result, .treasure-result {
-  width: 100vw;
-  height: 100vh;
   text-align: center;
   margin-top: 0;
   margin-bottom: 0;
+}
+.home {
+  width: 100vw;
+  height: 100vh;
 }
 
 .code-input {
