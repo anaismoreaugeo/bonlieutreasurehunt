@@ -1,26 +1,30 @@
 <template>
-    <div class="home">
-      <h1>Totem</h1>
-      <div class="code-input">
-        <label for="code">Entrez le code :</label>
-        <input v-model="code" type="text" id="code" name="code" placeholder="Votre code ici">
-        <button @click="checkCode">Entrer</button>
-      </div>
+  <div class="home">
+    <h1>Totem</h1>
+    <div class="code-input">
+      <label for="code">Entrez le code :</label>
+      <input v-model="code" type="text" id="code" name="code" placeholder="Votre code ici">
+      <button @click="checkCode">Entrer</button>
+    </div>
+    <div class="scanner-container">
       <div class="scanner-placeholder">
-        <!-- Espace réservé pour le scanner ou la caméra -->
+        <img id="scanner-icon" class="scanner-icon" src="@/assets/qr-code.png" alt="Scanner" width="100" height="100" @click="toggleScanner" v-if="!isScannerActive">
+        <qrcode-stream v-if="isScannerActive" @decode="onDecode" @init="onInit" @click="toggleScanner"></qrcode-stream>
       </div>
     </div>
-    <AppModal v-if="isModalOpen" @close="isModalOpen = false">
-      <template #header>
-        <div class="modal-header">{{ modalHeader }}</div>
-      </template>
-      <template #body>
-        <component :is="currentComponent"></component>
-      </template>
-    </AppModal>
+  </div>
+  <AppModal v-if="isModalOpen" @close="isModalOpen = false">
+    <template #header>
+      <div class="modal-header">{{ modalHeader }}</div>
+    </template>
+    <template #body>
+      <component :is="currentComponent"></component>
+    </template>
+  </AppModal>
 </template>
 
 <script>
+import { QrcodeStream } from 'vue-qrcode-reader';
 import AppModal from '../components/AppModal.vue';
 import AppTotem1 from '../components/Games/AppTotem1.vue';
 import AppTotem2 from '../components/Games/AppTotem2.vue';
@@ -35,6 +39,7 @@ export default {
     AppTotem2,
     AppTotem3,
     AppTotem4,
+    QrcodeStream
   },
   data() {
     return {
@@ -42,18 +47,40 @@ export default {
       isModalOpen: false,
       modalHeader: '',
       currentComponent: null,
+      decodedResult: '',
+      isScannerActive: false
     };
   },
   methods: {
     checkCode() {
       const totem = this.getTotemByCode(this.code);
       if (totem) {
-        // this.modalHeader = `Faites le chemin pour débloquer le ${totem}`;
         this.currentComponent = this.getComponent(totem);
         this.isModalOpen = true;
       } else {
         alert("Code incorrect, veuillez réessayer.");
       }
+    },
+    toggleScanner() {
+      this.isScannerActive = !this.isScannerActive;
+    },
+    onDecode(result) {
+      this.code = result;
+      this.checkCode();
+      this.isScannerActive = false;  // Désactiver le scanner après avoir décodé
+    },
+    onInit(promise) {
+      promise.then(() => {
+        console.log('Successfully initialized!');
+      }).catch(error => {
+        if (error.name === 'NotAllowedError') {
+          console.error('Permission denied.');
+        } else if (error.name === 'NotFoundError') {
+          console.error('No camera found.');
+        } else {
+          console.error(error);
+        }
+      });
     },
     getTotemByCode(code) {
       switch (code) {
@@ -86,3 +113,13 @@ export default {
   },
 };
 </script>
+
+<style>
+.home {
+  text-align: center;
+  margin-top: 60px;
+}
+.code-input {
+  margin-bottom: 20px;
+}
+</style>
