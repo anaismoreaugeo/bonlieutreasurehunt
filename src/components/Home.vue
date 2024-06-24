@@ -7,11 +7,11 @@
       <button @click="checkCode">Entrer</button>
     </div>
     <div class="scanner-container">
-      <div class="scanner-placeholder">
-        <img id="scanner-icon" class="scanner-icon" src="@/assets/qr-code.png" alt="Scanner" width="100" height="100" @click="toggleScanner" v-if="!isScannerActive">
-        <qrcode-stream v-if="isScannerActive" @decode="onDecode" @init="onInit" @click="toggleScanner"></qrcode-stream>
-      </div>
+    <div class="scanner-placeholder">
+      <img id="scanner-icon" class="scanner-icon" src="@/assets/qr-code.png" alt="Scanner" width="100" height="100" @click="toggleScanner" v-if="!isScannerActive">
+      <qrcode-stream @decode="onDecode" @detect="onDetect" v-if="isScannerActive"></qrcode-stream>
     </div>
+  </div>
   </div>
   <AppModal v-if="isModalOpen" @close="isModalOpen = false">
     <template #header>
@@ -24,12 +24,12 @@
 </template>
 
 <script>
-import { QrcodeStream } from 'vue-qrcode-reader';
 import AppModal from '../components/AppModal.vue';
 import AppTotem1 from '../components/Games/AppTotem1.vue';
 import AppTotem2 from '../components/Games/AppTotem2.vue';
 import AppTotem3 from '../components/Games/AppTotem3.vue';
 import AppTotem4 from '../components/Games/AppTotem4.vue';
+import { QrcodeStream } from 'vue-qrcode-reader';
 
 export default {
   name: 'AppHome',
@@ -47,7 +47,6 @@ export default {
       isModalOpen: false,
       modalHeader: '',
       currentComponent: null,
-      decodedResult: '',
       isScannerActive: false
     };
   },
@@ -63,24 +62,6 @@ export default {
     },
     toggleScanner() {
       this.isScannerActive = !this.isScannerActive;
-    },
-    onDecode(result) {
-      this.code = result;
-      this.checkCode();
-      this.isScannerActive = false;  // Désactiver le scanner après avoir décodé
-    },
-    onInit(promise) {
-      promise.then(() => {
-        console.log('Successfully initialized!');
-      }).catch(error => {
-        if (error.name === 'NotAllowedError') {
-          console.error('Permission denied.');
-        } else if (error.name === 'NotFoundError') {
-          console.error('No camera found.');
-        } else {
-          console.error(error);
-        }
-      });
     },
     getTotemByCode(code) {
       switch (code) {
@@ -110,16 +91,39 @@ export default {
           return null;
       }
     },
-  },
+    onDecode(decodedString) {
+      console.log('QR code decoded:', decodedString);
+      this.code = decodedString;
+      this.checkCode();
+    },
+    onInit(promise) {
+      promise.then(() => {
+        console.log('Camera initialized');
+      }).catch(error => {
+        console.error('Camera initialization failed:', error);
+        if (error.name === 'NotAllowedError') {
+          alert('Accès à la caméra refusé!');
+        } else if (error.name === 'NotFoundError') {
+          alert('Caméra non trouvée!');
+        } else {
+          alert('Erreur lors de l\'initialisation de la caméra: ' + error.message);
+        }
+      });
+    },
+    onDetect(result) {
+      console.log('QR code detected:', result);
+      console.log(JSON.stringify(result.map((code) => code.rawValue)));
+      this.code = result[0].rawValue;
+      this.isScannerActive = false;
+      this.checkCode();
+    }
+  }
 };
 </script>
 
 <style>
-.home {
-  text-align: center;
-  margin-top: 60px;
-}
-.code-input {
-  margin-bottom: 20px;
+.qrcode-stream {
+  width: 100%;
+  height: auto;
 }
 </style>
