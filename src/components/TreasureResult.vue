@@ -25,7 +25,7 @@
       <button class="ui-btn-black" v-if="validated" @click="downloadImage">
         <img src="@/assets/download.svg">TELECHARGER
       </button>
-      <button class="ui-btn-black" v-if="validated">PLACER SUR LE MUR</button>
+      <button class="ui-btn-black" v-if="validated" @click="placeOnWall">PLACER SUR LE MUR</button>
     </div>
   </div>
 </template>
@@ -74,7 +74,11 @@ export default {
       link.download = 'treasure-result.png';
       link.href = canvas.toDataURL('image/png');
       link.click();
+    },
+    placeOnWall() {
+      this.$router.push({ name: 'WallResult' }); 
     }
+
   }
 };
 </script>
