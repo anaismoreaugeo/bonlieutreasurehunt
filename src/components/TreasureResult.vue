@@ -23,6 +23,7 @@
 <script>
 import SliderSquare from './SliderSquare.vue';
 import html2canvas from 'html2canvas';
+import axios from "axios";
 
 export default {
   name: 'TreasureResult',
@@ -49,10 +50,22 @@ export default {
     },
 
     async downloadImage() {
-      const link = document.createElement('a');
+      console.log('save logo to data.json')
+
+      try {
+        await axios.post('/api/add-data', {
+          logo: this.$store.getters.getFullLogo()
+        })
+      } catch (error) {
+        console.error(error)
+        alert('Impossible de sauvegarder votre logo.')
+      }
+
+
+      /* const link = document.createElement('a');
       link.download = 'treasure-result.png';
       link.href = await this.createImage();
-      link.click();
+      link.click(); */
     },
 
     async createImage(){

@@ -5,7 +5,9 @@ const filePath = path.join(__dirname, '..', 'data.json');
 
 module.exports = (req, res) => {
     if (req.method === 'POST') {
-        const { id, x, y } = req.body;
+        console.log(req.body)
+
+        /* const { id, x, y } = req.body;
 
         fs.readFile(filePath, 'utf8', (err, data) => {
             if (err) {
@@ -25,7 +27,7 @@ module.exports = (req, res) => {
 
                 res.status(200).json({ message: 'Data added successfully' });
             });
-        });
+        }); */
     } else {
         res.status(405).json({ error: 'Method not allowed' });
     }

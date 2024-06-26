@@ -26,12 +26,12 @@ export default createStore({
       commit('activateTotem', totem);
     },
     updateLogoStructure({ commit }, data) {
-      console.log('data', data);
       commit('updateLogoStructure', data);
     }
   },
   getters: {
     isActive: (state) => (totem) => state.totems[totem],
-    getLogoStructure: (state) => (id) => state.logoStructure[id] || { currentIndex: 0, colorClass: 'cls-1' }
+    getLogoStructure: (state) => (id) => state.logoStructure[id] || { currentIndex: 0, colorClass: 'cls-1' },
+    getFullLogo: (state) => () => state.logoStructure
   },
 });
