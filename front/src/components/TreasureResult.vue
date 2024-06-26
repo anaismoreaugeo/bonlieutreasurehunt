@@ -12,10 +12,10 @@
       </div>
     </div>
     <div class="bottom-dots">
-      <button class="dot red" @click="changeColor('red-stroke')"></button>
-      <button class="dot blue" @click="changeColor('blue-stroke')"></button>
-      <button class="dot yellow" @click="changeColor('yellow-stroke')"></button>
-      <button class="dot green" @click="changeColor('green-stroke')"></button>
+      <button class="dot red" @click="changeColor(Colors.Color1)"></button>
+      <button class="dot blue" @click="changeColor(Colors.Color2)"></button>
+      <button class="dot yellow" @click="changeColor(Colors.Color3)"></button>
+      <button class="dot green" @click="changeColor(Colors.Color4)"></button>
     </div>
   </div>
 </template>
@@ -24,9 +24,15 @@
 import SliderSquare from './SliderSquare.vue';
 import html2canvas from 'html2canvas';
 import axios from "axios";
+import {Colors} from "@/store";
 
 export default {
   name: 'TreasureResult',
+  computed: {
+    Colors() {
+      return Colors
+    }
+  },
   components: {
     SliderSquare
   },
@@ -44,23 +50,26 @@ export default {
       if (this.lastClickedIndex !== null) {
         const updatedColors = [...this.colors];
         updatedColors[this.lastClickedIndex] = colorClass;
+
+        let logoStructure = this.$store.getters.getLogoStructure(this.lastClickedIndex)
+
+        this.$store.dispatch('updateLogoStructure', { id: this.lastClickedIndex, form: logoStructure.form, color: colorClass });
+
         this.colors = updatedColors;
+
         this.lastClickedIndex = null; // Reset last clicked index
       }
     },
 
     async downloadImage() {
-      console.log('save logo to data.json')
-
       try {
-        await axios.post('/api/add-data', {
+        await axios.post('/api/add-logo', {
           logo: this.$store.getters.getFullLogo()
         })
       } catch (error) {
         console.error(error)
         alert('Impossible de sauvegarder votre logo.')
       }
-
 
       /* const link = document.createElement('a');
       link.download = 'treasure-result.png';

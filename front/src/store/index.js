@@ -1,5 +1,20 @@
 import { createStore } from 'vuex';
 
+export const Colors = {
+  Default: 'cls-1',
+  Color1: 'red-stroke',
+  Color2: 'blue-stroke',
+  Color3: 'yellow-stroke',
+  Color4: 'green-stroke'
+}
+
+export const Forms = {
+  Form1: 0,
+  Form2: 1,
+  Form3: 2,
+  Form4: 3
+}
+
 export default createStore({
   state: {
     totems: {
@@ -14,10 +29,10 @@ export default createStore({
     activateTotem(state, totem) {
       state.totems[totem] = true;
     },
-    updateLogoStructure(state, { id, currentIndex, colorClass }) {
+    updateLogoStructure(state, { id, form, color }) {
       state.logoStructure = {
         ...state.logoStructure,
-        [id]: { currentIndex, colorClass }
+        [id]: { form, color }
       };
     }
   },
@@ -31,7 +46,7 @@ export default createStore({
   },
   getters: {
     isActive: (state) => (totem) => state.totems[totem],
-    getLogoStructure: (state) => (id) => state.logoStructure[id] || { currentIndex: 0, colorClass: 'cls-1' },
+    getLogoStructure: (state) => (id) => state.logoStructure[id] || { form: Forms.Form1, color: Colors.Default },
     getFullLogo: (state) => () => state.logoStructure
   },
 });
