@@ -82,6 +82,15 @@ export default {
     },
 
     async downloadImage() {
+      const element = this.$el.querySelector('.center-square');
+      const canvas = await html2canvas(element);
+      const link = document.createElement('a');
+      link.download = 'treasure-result.png';
+      link.href = canvas.toDataURL('image/png');
+      link.click();
+    },
+
+    async placeOnWall() {
       try {
         await axios.post('/api/add-logo', {
           logo: this.$store.getters.getFullLogo()
@@ -91,27 +100,8 @@ export default {
         alert('Impossible de sauvegarder votre logo.')
       }
 
-      /* const link = document.createElement('a');
-      link.download = 'treasure-result.png';
-      link.href = await this.createImage();
-      link.click(); */
-    },
-
-    async createImage(){
-      const element = this.$el.querySelector('.center-square');
-      const canvas = await html2canvas(element);
-      const link = document.createElement('a');
-      link.download = 'treasure-result.png';
-      link.href = canvas.toDataURL('image/png');
-      link.click();
-    },
-    placeOnWall() {
-      this.$router.push({ name: 'WallResult' });
-      return canvas.toDataURL('image/png');
+      await this.$router.push({name: 'WallResult'});
     }
-
-
-
   }
 };
 </script>
