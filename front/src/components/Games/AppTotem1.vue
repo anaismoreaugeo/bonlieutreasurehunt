@@ -66,9 +66,6 @@ export default {
 </script>
 
 <style scoped>
-svg {
-  border: 1px solid black;
-}
 
 .cls-1 {
   fill: none;
