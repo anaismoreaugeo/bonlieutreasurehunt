@@ -1,6 +1,8 @@
 <template>
   <div>
-    <small>{{ title }}{{ description }}</small>
+    <h2>MINI-JEU !</h2>
+    <p>TRACEZ LE DESSIN SANS REPASSER PAR LES MÊMES SEGMENTS</p>
+    <!-- <small>{{ title }}{{ description }}</small> -->
     <div class="game-container" @mousedown="startDrawing" @mousemove="draw" @mouseup="endDrawing" @mouseleave="endDrawing" @touchstart="startDrawing" @touchmove="draw" @touchend="endDrawing">
       <slot></slot>
       <svg ref="traceSvg" :viewBox="viewBox" class="trace-svg">
@@ -131,6 +133,7 @@ export default {
   position: relative;
   width: 70%;
   height: auto;
+  margin: 0 auto;
 }
 
 .base-svg, .trace-svg {
