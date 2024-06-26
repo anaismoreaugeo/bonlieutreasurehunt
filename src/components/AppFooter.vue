@@ -3,23 +3,21 @@
     <button
       @click="navigateTo('Home')"
       :class="['footer-btn', { active: isActive('Home') }]"
-    >
-      <i class="fas fa-home"></i>
-      <span>Home</span>
+    > 
+    <img class="rec" src="@/assets/scan.svg">
+      <span>SCAN</span>
     </button>
     <button
       @click="navigateTo('HuntingResult')"
-      :class="['footer-btn', { active: isActive('HuntingResult') }]"
-    >
-      <i class="fas fa-search"></i>
-      <span>Hunting Result</span>
+      :class="['footer-btn', { active: isActive('HuntingResult') }]">
+      <img class="rec" src="@/assets/search.svg">
+      <span>CARNET DE TOTEMS</span>
     </button>
     <button
       @click="navigateTo('TreasureResult')"
-      :class="['footer-btn', { active: isActive('TreasureResult') }]"
-    >
-      <i class="fas fa-gem"></i>
-      <span>Treasure Result</span>
+      :class="['footer-btn', { active: isActive('TreasureResult') }]">
+      <img class="rec" src="@/assets/mur.svg">
+      <span>LE MUR</span>
     </button>
   </footer>
 </template>

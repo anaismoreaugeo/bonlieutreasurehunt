@@ -16,9 +16,9 @@
     <div class="line"></div>
   </div>
     <div class="code-input">
-      <p>Entrez le code</p>
+      <p>ENTREZ LE CODE</p>
       <input v-model="code" type="text" id="code" name="code" placeholder="X X X X">
-      <button class="ui-btn-black" @click="checkCode">Entrer</button>
+      <button class="ui-btn-black" @click="checkCode">ENTRER</button>
     </div>
   </div>
   <AppModal v-if="isModalOpen" @close="isModalOpen = false">

@@ -23,7 +23,7 @@
     <div class="treasure-validation">
       <button class="ui-btn-black" v-if="!validated" @click="validate">VALIDER</button>
       <button class="ui-btn-black" v-if="validated" @click="downloadImage">
-        <i class="fas fa-download"></i>
+        <img src="@/assets/download.svg">TELECHARGER
       </button>
       <button class="ui-btn-black" v-if="validated">PLACER SUR LE MUR</button>
     </div>
