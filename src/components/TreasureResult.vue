@@ -5,10 +5,10 @@
         <button class="download-btn" @click="downloadImage">
           <i class="fas fa-download"></i>
         </button>
-        <SliderSquare class="inner-square top-left" :colorClass="colors[0]" @update-last-clicked="updateLastClicked(0)" />
-        <SliderSquare class="inner-square top-right" :colorClass="colors[1]" @update-last-clicked="updateLastClicked(1)" />
-        <SliderSquare class="inner-square bottom-left" :colorClass="colors[2]" @update-last-clicked="updateLastClicked(2)" />
-        <SliderSquare class="inner-square bottom-right" :colorClass="colors[3]" @update-last-clicked="updateLastClicked(3)" />
+        <SliderSquare class="inner-square top-left" :colorClass="colors[0]" @update-last-clicked="updateLastClicked(0)" :id="0"/>
+        <SliderSquare class="inner-square top-right" :colorClass="colors[1]" @update-last-clicked="updateLastClicked(1)" :id="1" />
+        <SliderSquare class="inner-square bottom-left" :colorClass="colors[2]" @update-last-clicked="updateLastClicked(2)" :id="2" />
+        <SliderSquare class="inner-square bottom-right" :colorClass="colors[3]" @update-last-clicked="updateLastClicked(3)" :id="3" />
       </div>
     </div>
     <div class="bottom-dots">
@@ -47,14 +47,21 @@ export default {
         this.lastClickedIndex = null; // Reset last clicked index
       }
     },
+
     async downloadImage() {
-      const element = this.$el.querySelector('.center-square');
-      const canvas = await html2canvas(element);
       const link = document.createElement('a');
       link.download = 'treasure-result.png';
-      link.href = canvas.toDataURL('image/png');
+      link.href = await this.createImage();
       link.click();
+    },
+
+    async createImage(){
+      const element = this.$el.querySelector('.center-square');
+      const canvas = await html2canvas(element);
+      return canvas.toDataURL('image/png');
     }
+
+
   }
 };
 </script>

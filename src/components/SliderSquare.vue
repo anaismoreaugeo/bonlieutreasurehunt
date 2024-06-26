@@ -1,5 +1,5 @@
 <template>
-  <div class="slider-square" @click="nextImage">
+  <div class="slider-square" @click="nextImage" :id="id">
     <svg v-if="currentIndex === 0" :class="colorClass" viewBox="0 0 200 200">
       <polygon points="-156.84 131.24 -156.84 356.66 66.49 356.66 66.49 244 183.78 244 183.78 15.61 -40.17 15.61 -40.17 128.79 68.99 128.79 66.49 244 -41.86 244 -40.17 128.79 -156.84 131.24"/>
     </svg>
@@ -22,17 +22,43 @@ export default {
     colorClass: {
       type: String,
       default: 'cls-1'
+    },
+    id: {
+      type: Number,
+      default: 0
     }
   },
   data() {
     return {
-      currentIndex: 0
+      currentIndex: this.$store.getters.getLogoStructure(this.id).currentIndex,
+      currentColorClass: this.colorClass
     };
+  },
+  created() {
+    const logoStructure = this.$store.getters.getLogoStructure(this.id);
+    if (logoStructure) {
+      this.currentIndex = logoStructure.currentIndex;
+      this.currentColorClass = logoStructure.colorClass;
+    }
   },
   methods: {
     nextImage() {
       this.currentIndex = (this.currentIndex + 1) % 4;
+      this.$store.dispatch('updateLogoStructure', { id: this.id, currentIndex: this.currentIndex, colorClass: this.colorClass });
       this.$emit('update-last-clicked');
+    }
+  },
+  watch: {
+    // Watcher pour mettre à jour currentIndex et currentColorClass si le store change
+    '$store.state.logoStructure': {
+      handler() {
+        const logoStructure = this.$store.getters.getLogoStructure(this.id);
+        if (logoStructure) {
+          this.currentIndex = logoStructure.currentIndex;
+          this.currentColorClass = logoStructure.colorClass;
+        }
+      },
+      deep: true
     }
   }
 };
