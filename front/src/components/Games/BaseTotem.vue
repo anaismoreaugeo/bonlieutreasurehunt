@@ -1,7 +1,7 @@
 <template>
   <div>
     <h2>MINI-JEU !</h2>
-    <p>TRACEZ LE DESSIN SANS REPASSER PAR LES MÊMES SEGMENTS</p>
+    <p>TRACEZ LE DESSIN SANS LACHER LE DOIGT ET SANS REVENIR EN ARR</p>
     <div class="game-container" @mousedown="startDrawing" @mousemove="draw" @mouseup="endDrawing" @mouseleave="endDrawing" @touchstart="startDrawing" @touchmove="draw" @touchend="endDrawing">
       <svg :viewBox="viewBox"
            @mousedown="startDrawing($event, 'mouse')"
@@ -177,7 +177,6 @@ export default {
 <style scoped>
 .game-container {
   position: relative;
-  width: 70%;
   height: auto;
   margin: 0 auto;
 }
