@@ -1,7 +1,7 @@
 <template>
   <div>
     <h2>MINI-JEU !</h2>
-    <p>TRACEZ LE DESSIN SANS LACHER LE DOIGT ET SANS REVENIR EN ARR</p>
+    <p>TRACEZ LE DESSIN SANS LACHER LE DOIGT ET SANS REVENIR EN ARRIERE</p>
     <div class="game-container" @mousedown="startDrawing" @mousemove="draw" @mouseup="endDrawing" @mouseleave="endDrawing" @touchstart="startDrawing" @touchmove="draw" @touchend="endDrawing">
       <svg :viewBox="viewBox"
            @mousedown="startDrawing($event, 'mouse')"
@@ -18,7 +18,7 @@
 
         <!-- Afficher les indices si showIndices est true -->
         <g v-if="showIndices">
-          <text v-for="(point, index) in points" :key="'text-' + index" :x="point.x + 10" :y="point.y - 10" class="index-text">{{ index }}</text>
+          <text v-for="(point, index) in points" :key="'text-' + index" :x="point.x" :y="point.y" class="index-text" text-anchor="middle" dominant-baseline="middle">{{ index }}</text>
         </g>
 
         <!-- Dessiner les segments déjà tracés -->
