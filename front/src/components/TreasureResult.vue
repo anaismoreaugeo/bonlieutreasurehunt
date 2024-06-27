@@ -6,14 +6,14 @@
         <p>{{ instructionText2 }}</p>
     </div>
     <div class="content">
-      <div class="center-square" :class="{ 'no-border': validated }">
+      <div class="center-square">
         <SliderSquare class="inner-square top-left" :colorClass="colors[Category.Canard]" :id="Category.Canard"/>
         <SliderSquare class="inner-square top-right" :colorClass="colors[Category.Poisson]" :id="Category.Poisson" />
         <SliderSquare class="inner-square bottom-left" :colorClass="colors[Category.Poulpe]" :id="Category.Poulpe" />
         <SliderSquare class="inner-square bottom-right" :colorClass="colors[Category.Bateau]" :id="Category.Bateau" />
       </div>
     </div>
-    <div class="bottom-dots">
+    <div class="bottom-dots" v-if="!this.isValidated">
       <button class="dot red" v-bind:style="[this.selectedColor === Colors.Color1 ? {'border': '2px solid black'} : {}]" @click="changeColor(Colors.Color1)"></button>
       <button class="dot blue" v-bind:style="[this.selectedColor === Colors.Color2 ? {'border': '2px solid black'} : {}]" @click="changeColor(Colors.Color2)"></button>
       <button class="dot yellow" v-bind:style="[this.selectedColor === Colors.Color3 ? {'border': '2px solid black'} : {}]" @click="changeColor(Colors.Color3)"></button>
@@ -21,11 +21,11 @@
       <button class="dot black" v-bind:style="[this.selectedColor === Colors.Default ? {'border': '2px solid black'} : {}]" @click="changeColor(Colors.Default)"></button>
     </div>
     <div class="treasure-validation">
-      <button class="ui-btn-black" v-if="!validated" @click="validate">VALIDER</button>
-      <button class="ui-btn-black" v-if="validated" @click="downloadImage">
+      <button class="ui-btn-black" v-if="!this.isValidated" @click="validate">VALIDER</button>
+      <button class="ui-btn-black" v-if="this.isValidated" @click="downloadImage">
         <img src="@/assets/download.svg">TELECHARGER
       </button>
-      <button class="ui-btn-black" v-if="validated" @click="placeOnWall">PLACER SUR LE MUR</button>
+      <button class="ui-btn-black" v-if="this.isValidated" @click="placeOnWall">Découvrir mon totem</button>
     </div>
   </div>
 </template>
@@ -52,12 +52,23 @@ export default {
   data() {
     return {
       colors: ['cls-1', 'cls-1', 'cls-1', 'cls-1'],
-      validated: false,
+      isValidated: null,
       instructionTitle: "PERSONNALISEZ VOTRE PICTOGRAMME",
       instructionText1: "CLIQUEZ SUR UNE PARTIE POUR CHANGER LA FORME ET LA COULEUR",
       instructionText2: "AJOUTEZ VOTRE PIERRE A L'EDIFICE DU MUR DE BONLIEU",
       selectedColor: null
     };
+  },
+  async created() {
+    const isValidated = this.$store.getters.isValidated();
+
+    if (isValidated) {
+      this.isValidated = isValidated.isValidated
+    }
+
+    if (this.isValidated) {
+      await this.$router.push({name: 'WallResult'});
+    }
   },
   methods: {
     changeColor(colorClass) {
@@ -88,7 +99,9 @@ export default {
       }
     },
     validate() {
-      this.validated = true;
+      this.$store.dispatch('updateSelectedSquare', { id: null });
+      this.$store.dispatch('updateIsValidated', { isValidated: true });
+
       this.instructionTitle = "BRAVO ! VOTRE PICTOGRAMME EST MAGNIFIQUE!";
       this.instructionText1 = "VOUS POUVEZ MAINTENANT L'ENREGISTRER ET LE PLACER SUR LE MUR !";
       this.instructionText2 = "";
@@ -98,6 +111,7 @@ export default {
       const element = this.$el.querySelector('.center-square');
       const canvas = await html2canvas(element);
       const link = document.createElement('a');
+
       link.download = 'treasure-result.png';
       link.href = canvas.toDataURL('image/png');
       link.click();
@@ -125,6 +139,15 @@ export default {
 
         if (selectedColor.color) {
           this.selectedColor = selectedColor.color
+        }
+      }
+    },
+    '$store.state.isValidated': {
+      handler() {
+        const isValidated = this.$store.getters.isValidated();
+
+        if (isValidated) {
+          this.isValidated = isValidated.isValidated
         }
       }
     }

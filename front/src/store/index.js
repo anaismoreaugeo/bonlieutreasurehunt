@@ -32,6 +32,7 @@ export default createStore({
     logoStructure: {},  // Stocker les objets contenant currentIndex et colorClass,
     selectedSquare: null,
     selectedColor: null,
+    isValidated: false,
   },
   mutations: {
     activateTotem(state, totem) {
@@ -48,6 +49,9 @@ export default createStore({
     },
     updateSelectedColor(state, color) {
       state.selectedColor = color
+    },
+    updateIsValidated(state, isValidated) {
+      state.isValidated = isValidated
     }
   },
   actions: {
@@ -62,6 +66,9 @@ export default createStore({
     },
     updateSelectedColor({ commit }, color) {
       commit('updateSelectedColor', color)
+    },
+    updateIsValidated({ commit }, isValidated) {
+      commit('updateIsValidated', isValidated)
     }
   },
   getters: {
@@ -69,6 +76,7 @@ export default createStore({
     getLogoStructure: (state) => (id) => state.logoStructure[id] || { form: Forms.Form1, color: Colors.Default },
     getFullLogo: (state) => () => state.logoStructure,
     getSelectedSquare: (state) => () => state.selectedSquare,
-    getSelectedColor: (state) => () => state.selectedColor
+    getSelectedColor: (state) => () => state.selectedColor,
+    isValidated: (state) => () => state.isValidated
   },
 });

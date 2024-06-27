@@ -93,7 +93,8 @@ export default {
     return {
       currentForm: this.$store.getters.getLogoStructure(this.id).form,
       currentColor: this.colorClass,
-      selectedSquare: false
+      selectedSquare: false,
+      isValidated: null
     };
   },
   created() {
@@ -107,6 +108,10 @@ export default {
   },
   methods: {
     selectSquare() {
+      if (this.isValidated) {
+        return
+      }
+
       this.selectedSquare = true
       this.$store.dispatch('updateSelectedSquare', { id: this.id });
     },
@@ -145,6 +150,15 @@ export default {
 
         if (logoStructure) {
           this.$store.dispatch('updateSelectedColor', { color: logoStructure.color });
+        }
+      }
+    },
+    '$store.state.isValidated': {
+      handler() {
+        const isValidated = this.$store.getters.isValidated();
+
+        if (isValidated) {
+          this.isValidated = isValidated.isValidated
         }
       }
     }
