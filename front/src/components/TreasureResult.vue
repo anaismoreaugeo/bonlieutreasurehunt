@@ -7,10 +7,10 @@
     </div>
     <div class="content">
       <div class="center-square" :class="{ 'no-border': validated }">
-        <SliderSquare class="inner-square top-left" :colorClass="colors[0]" :id="0"/>
-        <SliderSquare class="inner-square top-right" :colorClass="colors[1]" :id="1" />
-        <SliderSquare class="inner-square bottom-left" :colorClass="colors[2]" :id="2" />
-        <SliderSquare class="inner-square bottom-right" :colorClass="colors[3]" :id="3" />
+        <SliderSquare class="inner-square top-left" :colorClass="colors[Category.Canard]" :id="Category.Canard"/>
+        <SliderSquare class="inner-square top-right" :colorClass="colors[Category.Poisson]" :id="Category.Poisson" />
+        <SliderSquare class="inner-square bottom-left" :colorClass="colors[Category.Poulpe]" :id="Category.Poulpe" />
+        <SliderSquare class="inner-square bottom-right" :colorClass="colors[Category.Bateau]" :id="Category.Bateau" />
       </div>
     </div>
     <div class="bottom-dots">
@@ -34,11 +34,14 @@
 import SliderSquare from './SliderSquare.vue';
 import html2canvas from 'html2canvas';
 import axios from "axios";
-import {Colors} from "@/store";
+import {Category, Colors} from "@/store";
 
 export default {
   name: 'TreasureResult',
   computed: {
+    Category() {
+      return Category
+    },
     Colors() {
       return Colors
     }
@@ -102,6 +105,8 @@ export default {
 
     async placeOnWall() {
       try {
+        console.log(this.$store.getters.getFullLogo())
+
         await axios.post('/api/add-logo', {
           logo: this.$store.getters.getFullLogo()
         })

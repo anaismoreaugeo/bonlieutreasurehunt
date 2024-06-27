@@ -452,15 +452,15 @@ main {
   cursor: pointer;
 }
 
-.cls-1 {
+.cls-1, .cls-1.path {
   stroke: black;
   fill: none;
   stroke-miterlimit: 10;
   stroke-width: 14px;
 }
 
-.green-stroke {
-  stroke: #00A37A ;
+.green-stroke, .green-stroke.path {
+  stroke: #00A37A !important;
   
   fill: none;
   stroke-miterlimit: 10;

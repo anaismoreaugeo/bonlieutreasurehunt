@@ -12,7 +12,13 @@ export const Forms = {
   Form1: 0,
   Form2: 1,
   Form3: 2,
-  Form4: 3
+}
+
+export const Category = {
+  Canard: 0,
+  Poisson: 1,
+  Poulpe: 2,
+  Bateau: 3
 }
 
 export default createStore({
