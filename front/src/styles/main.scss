@@ -29,6 +29,10 @@ body, #app {
   flex-direction: column;
 }
 
+body {
+  overflow-y: hidden;
+}
+
 .instruction {
   padding: 20px;
   p {
