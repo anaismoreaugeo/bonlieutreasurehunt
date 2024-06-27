@@ -206,4 +206,8 @@ svg {
   font-size: 12px;
   font-family: Arial, sans-serif;
 }
+
+svg{
+  border: 0px;
+}
 </style>
