@@ -11,10 +11,10 @@
       </div>
     </div>
     <div class="line-container">
-    <div class="line"></div>
-    <div >OU</div>
-    <div class="line"></div>
-  </div>
+      <div class="line"></div>
+      <div>OU</div>
+      <div class="line"></div>
+    </div>
     <div class="code-input">
       <p>ENTREZ LE CODE</p>
       <input v-model="code" type="text" id="code" name="code" placeholder="X X X X">
@@ -64,6 +64,15 @@ export default {
       isScannerActive: false,
       showCongratsModal: false
     };
+  },
+  mounted() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const totemCode = urlParams.get('totemCode');
+
+    if (totemCode) {
+      this.code = totemCode;
+      this.checkCode();
+    }
   },
   methods: {
     checkCode() {
