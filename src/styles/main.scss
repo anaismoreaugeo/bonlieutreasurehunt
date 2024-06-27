@@ -404,3 +404,20 @@ main {
   stroke-miterlimit: 10;
   stroke-width: 14px;
 }
+
+.mini-game-instructions-container{
+  display: flex;
+  flex-direction: column;
+}
+
+.mini-game-instructions-container h1, .mini-game-instructions-container p{
+  text-align: center;
+}
+
+.mini-game-instructions-container h1{
+  margin-bottom: 0.75rem;
+}
+
+.mini-game-instructions-container p{
+  margin-bottom: 1.5rem;
+}
