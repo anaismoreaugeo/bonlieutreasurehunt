@@ -127,10 +127,17 @@ export default {
     },
     onDetect(result) {
       console.log('QR code detected:', result);
-      console.log(JSON.stringify(result.map((code) => code.rawValue)));
-      this.code = result[0].rawValue;
-      this.isScannerActive = false;
-      this.checkCode();
+      const url = new URL(result[0].rawValue);
+      const params = new URLSearchParams(url.search);
+      const totemCode = params.get('totemCode');
+
+      if (totemCode) {
+        this.code = totemCode;
+        this.isScannerActive = false;
+        this.checkCode();
+      } else {
+        console.error('Paramètre totemCode non trouvé dans l\'URL');
+      }
     },
     popCongratModal() {
       this.showCongratsModal = true;
