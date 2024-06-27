@@ -7,18 +7,18 @@
     </div>
     <div class="content">
       <div class="center-square" :class="{ 'no-border': validated }">
-        <SliderSquare class="inner-square top-left" :colorClass="colors[0]" @update-last-clicked="updateLastClicked(0)" :id="0"/>
-        <SliderSquare class="inner-square top-right" :colorClass="colors[1]" @update-last-clicked="updateLastClicked(1)" :id="1" />
-        <SliderSquare class="inner-square bottom-left" :colorClass="colors[2]" @update-last-clicked="updateLastClicked(2)" :id="2" />
-        <SliderSquare class="inner-square bottom-right" :colorClass="colors[3]" @update-last-clicked="updateLastClicked(3)" :id="3" />
+        <SliderSquare class="inner-square top-left" :colorClass="colors[0]" :id="0"/>
+        <SliderSquare class="inner-square top-right" :colorClass="colors[1]" :id="1" />
+        <SliderSquare class="inner-square bottom-left" :colorClass="colors[2]" :id="2" />
+        <SliderSquare class="inner-square bottom-right" :colorClass="colors[3]" :id="3" />
       </div>
     </div>
     <div class="bottom-dots">
-      <button class="dot red" @click="changeColor(Colors.Color1)"></button>
-      <button class="dot blue" @click="changeColor(Colors.Color2)"></button>
-      <button class="dot yellow" @click="changeColor(Colors.Color3)"></button>
-      <button class="dot green" @click="changeColor(Colors.Color4)"></button>
-      <button class="dot black" @click="changeColor(Colors.Default)"></button>
+      <button class="dot red" v-bind:style="[this.selectedColor === Colors.Color1 ? {'border': '2px solid black'} : {}]" @click="changeColor(Colors.Color1)"></button>
+      <button class="dot blue" v-bind:style="[this.selectedColor === Colors.Color2 ? {'border': '2px solid black'} : {}]" @click="changeColor(Colors.Color2)"></button>
+      <button class="dot yellow" v-bind:style="[this.selectedColor === Colors.Color3 ? {'border': '2px solid black'} : {}]" @click="changeColor(Colors.Color3)"></button>
+      <button class="dot green" v-bind:style="[this.selectedColor === Colors.Color4 ? {'border': '2px solid black'} : {}]" @click="changeColor(Colors.Color4)"></button>
+      <button class="dot black" v-bind:style="[this.selectedColor === Colors.Default ? {'border': '2px solid black'} : {}]" @click="changeColor(Colors.Default)"></button>
     </div>
     <div class="treasure-validation">
       <button class="ui-btn-black" v-if="!validated" @click="validate">VALIDER</button>
@@ -49,29 +49,39 @@ export default {
   data() {
     return {
       colors: ['cls-1', 'cls-1', 'cls-1', 'cls-1'],
-      lastClickedIndex: null,
       validated: false,
       instructionTitle: "PERSONNALISEZ VOTRE PICTOGRAMME",
       instructionText1: "CLIQUEZ SUR UNE PARTIE POUR CHANGER LA FORME ET LA COULEUR",
-      instructionText2: "AJOUTEZ VOTRE PIERRE A L'EDIFICE DU MUR DE BONLIEU"
+      instructionText2: "AJOUTEZ VOTRE PIERRE A L'EDIFICE DU MUR DE BONLIEU",
+      selectedColor: null
     };
   },
   methods: {
-    updateLastClicked(index) {
-      this.lastClickedIndex = index;
-    },
     changeColor(colorClass) {
-      if (this.lastClickedIndex !== null) {
+      const selectedSquare = this.$store.getters.getSelectedSquare()
+
+      if (!selectedSquare) {
+        return
+      }
+
+      const selectedSquareId = selectedSquare.id;
+
+      if (selectedSquareId !== null) {
         const updatedColors = [...this.colors];
-        updatedColors[this.lastClickedIndex] = colorClass;
 
-        let logoStructure = this.$store.getters.getLogoStructure(this.lastClickedIndex)
+        updatedColors[selectedSquareId] = colorClass;
 
-        this.$store.dispatch('updateLogoStructure', { id: this.lastClickedIndex, form: logoStructure.form, color: colorClass });
+        let logoStructure = this.$store.getters.getLogoStructure(selectedSquareId)
+
+        this.$store.dispatch('updateLogoStructure', { id: selectedSquareId, form: logoStructure.form, color: colorClass });
 
         this.colors = updatedColors;
 
-        this.lastClickedIndex = null; // Reset last clicked index
+        this.selectedColor = colorClass
+
+        this.$store.dispatch('updateSelectedColor', { color: colorClass });
+
+        // this.lastClickedIndex = null; // Reset last clicked index
       }
     },
     validate() {
@@ -101,6 +111,17 @@ export default {
       }
 
       await this.$router.push({name: 'WallResult'});
+    }
+  },
+  watch: {
+    '$store.state.selectedColor': {
+      handler() {
+        const selectedColor = this.$store.getters.getSelectedColor();
+
+        if (selectedColor.color) {
+          this.selectedColor = selectedColor.color
+        }
+      }
     }
   }
 };

@@ -369,12 +369,12 @@ main {
 .center-square {
   width: 25vh;
   height: 25vh;
-  background-color: lightgrey;
+  //background-color: lightgrey;
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 1fr 1fr;
-  gap: 2px;
-  border: 1px solid #000;
+  gap: 10px;
+  //border: 1px solid #000;
 }
 
 .inner-square {
@@ -383,7 +383,9 @@ main {
 
 
 .bottom-dots {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(5, 50px);
+  gap: 10px;
   justify-content: center;
   align-items: center;
   margin-top: 20px;
@@ -393,14 +395,15 @@ main {
 
 .dot {
   border-radius: 50%;
-  width: 10%;
-  padding-top: 10%;
-  margin: 0 2%; 
+  width: 50px;
+  height: 50px;
+  margin-top: 10%;
+  padding: 0 2%;
   cursor: pointer;
   border: none;
   position: relative;
   background-color: transparent; 
-  overflow: hidden; 
+  overflow: hidden;
 }
 
 
