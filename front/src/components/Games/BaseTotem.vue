@@ -2,9 +2,7 @@
   <div>
     <h2>MINI-JEU !</h2>
     <p>TRACEZ LE DESSIN SANS REPASSER PAR LES MÊMES SEGMENTS</p>
-    <!-- <small>{{ title }}{{ description }}</small> -->
     <div class="game-container" @mousedown="startDrawing" @mousemove="draw" @mouseup="endDrawing" @mouseleave="endDrawing" @touchstart="startDrawing" @touchmove="draw" @touchend="endDrawing">
-      <slot></slot>
       <svg :viewBox="viewBox"
            @mousedown="startDrawing($event, 'mouse')"
            @mousemove="drawLine($event, 'mouse')"
@@ -14,8 +12,9 @@
            @touchmove="drawLine($event, 'touch')"
            @touchend="endDrawing"
            @touchcancel="endDrawing">
+        <slot></slot>
         <!-- Dessiner les points -->
-        <circle v-for="(point, index) in points" :key="index" :cx="point.x" :cy="point.y" :r="5" class="point"/>
+        <circle v-for="(point, index) in points" :key="index" :cx="point.x" :cy="point.y" :r="10" class="point"/>
 
         <!-- Afficher les indices si showIndices est true -->
         <g v-if="showIndices">
@@ -31,10 +30,6 @@
         <line v-if="drawing" :x1="points[startPoint].x" :y1="points[startPoint].y" :x2="currentPoint.x" :y2="currentPoint.y" class="segment"/>
       </svg>
     </div>
-    <label>
-      <input type="checkbox" v-model="isValidated" @change="validate">
-      Cochez pour valider
-    </label>
   </div>
 </template>
 
@@ -76,7 +71,8 @@ export default {
       localSegments: [], // Initialisation sans segments
       startPoint: null,
       currentPoint: null,
-      drawing: false
+      drawing: false,
+      showCongratsModal: false // État de la modale de félicitations
     };
   },
   computed: {
@@ -169,6 +165,8 @@ export default {
       const isComplete = sortedLocalSegments.every((seg, index) => seg === sortedSegments[index]);
       if (isComplete) {
         console.log('Bravo');
+        this.$emit('close'); // Fermer la modale actuelle
+        this.showCongratsModal = true; // Afficher la modale de félicitations
       }
       return isComplete;
     }
@@ -201,7 +199,8 @@ svg {
 }
 .segment {
   stroke: black;
-  stroke-width: 2;
+  stroke-width: 18;
+  stroke-linecap: round; 
 }
 .index-text {
   fill: black;

@@ -26,18 +26,23 @@
       <div class="modal-header">{{ modalHeader }}</div>
     </template>
     <template #body>
-      <component :is="currentComponent"></component>
+      <component :is="currentComponent" @close="popCongratModal"></component>
     </template>
   </AppModal>
+  <!-- Modale de félicitations -->
+  <Modal v-if="showCongratsModal" @close="showCongratsModal = false">
+    <h1>Bravo !</h1>
+  </Modal>
 </template>
 
 <script>
+import { QrcodeStream } from 'vue-qrcode-reader';
 import AppModal from '../components/AppModal.vue';
 import AppTotem1 from '../components/Games/AppTotem1.vue';
 import AppTotem2 from '../components/Games/AppTotem2.vue';
 import AppTotem3 from '../components/Games/AppTotem3.vue';
 import AppTotem4 from '../components/Games/AppTotem4.vue';
-import { QrcodeStream } from 'vue-qrcode-reader';
+import Modal from './UnlockTotem.vue';
 
 export default {
   name: 'AppHome',
@@ -47,7 +52,8 @@ export default {
     AppTotem2,
     AppTotem3,
     AppTotem4,
-    QrcodeStream
+    QrcodeStream,
+    Modal
   },
   data() {
     return {
@@ -55,7 +61,8 @@ export default {
       isModalOpen: false,
       modalHeader: '',
       currentComponent: null,
-      isScannerActive: false
+      isScannerActive: false,
+      showCongratsModal: false
     };
   },
   methods: {
@@ -124,6 +131,10 @@ export default {
       this.code = result[0].rawValue;
       this.isScannerActive = false;
       this.checkCode();
+    },
+    popCongratModal() {
+      this.showCongratsModal = true;
+      this.isModalOpen = false;
     }
   }
 };

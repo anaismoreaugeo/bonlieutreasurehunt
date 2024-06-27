@@ -506,19 +506,7 @@ main {
   background-color: #f9f9f9;
   cursor: pointer;
 }
-.mini-game-instructions-container{
-  display: flex;
-  flex-direction: column;
-}
 
-.mini-game-instructions-container h1, .mini-game-instructions-container p{
-  text-align: center;
-}
-
-.mini-game-instructions-container h1{
-  margin-bottom: 0.75rem;
-}
-
-.mini-game-instructions-container p{
-  margin-bottom: 1.5rem;
+.opacity-15{
+  opacity: 15%;
 }
