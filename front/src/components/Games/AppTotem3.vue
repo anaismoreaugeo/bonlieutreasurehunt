@@ -6,7 +6,7 @@
     :segments="segments"
     viewBox="0 0 347 130"
     :auto-draw-segments="false"
-    :show-indices="true"
+    :show-indices="false"
     @close="closeModal"
   >
     <svg viewBox="0 0 347 130" class="base-svg">
