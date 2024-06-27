@@ -2,10 +2,11 @@
   <BaseTotem 
     title="Jeu Totem 1" 
     description="Tracez le dessin sans repasser par les mêmes segments." 
-    totem="totem1"
     :points="points"
     :segments="segments"
     viewBox="0 0 364.06 515.53"
+    :auto-draw-segments="false"
+    :show-indices="true"
   >
     <svg ref="svg" viewBox="0 0 364.06 515.53" class="base-svg">
       <polygon class="cls-1" points="25.03 340.63 184.42 500.03 342.34 342.11 262.68 262.44 345.61 179.51 184.12 18.01 25.76 176.36 105.8 256.4 182.98 179.22 262.68 262.44 186.06 339.06 105.8 256.4 25.03 340.63"/>
@@ -47,18 +48,18 @@ export default {
         { x: 186.06, y: 339.06 }
       ],
       segments: [
-        { from: 0, to: 1 },
-        { from: 1, to: 2 },
-        { from: 2, to: 3 },
-        { from: 3, to: 4 },
-        { from: 4, to: 5 },
-        { from: 5, to: 6 },
-        { from: 6, to: 7 },
-        { from: 7, to: 8 },
-        { from: 8, to: 3 },
-        { from: 3, to: 9 },
-        { from: 9, to: 0 },
-        { from: 0, to: 7 }
+        { start: 0, end: 1 },
+        { start: 1, end: 2 },
+        { start: 2, end: 3 },
+        { start: 3, end: 4 },
+        { start: 4, end: 5 },
+        { start: 5, end: 6 },
+        { start: 6, end: 7 },
+        { start: 7, end: 8 },
+        { start: 8, end: 3 },
+        { start: 3, end: 9 },
+        { start: 9, end: 7 },
+        { start: 0, end: 7 }
       ]
     };
   }

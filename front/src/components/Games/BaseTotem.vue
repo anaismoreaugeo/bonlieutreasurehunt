@@ -5,8 +5,30 @@
     <!-- <small>{{ title }}{{ description }}</small> -->
     <div class="game-container" @mousedown="startDrawing" @mousemove="draw" @mouseup="endDrawing" @mouseleave="endDrawing" @touchstart="startDrawing" @touchmove="draw" @touchend="endDrawing">
       <slot></slot>
-      <svg ref="traceSvg" :viewBox="viewBox" class="trace-svg">
-        <path :d="pathData" stroke="red" stroke-width="20" fill="none"/>
+      <svg :viewBox="viewBox"
+           @mousedown="startDrawing($event, 'mouse')"
+           @mousemove="drawLine($event, 'mouse')"
+           @mouseup="endDrawing"
+           @mouseleave="endDrawing"
+           @touchstart="startDrawing($event, 'touch')"
+           @touchmove="drawLine($event, 'touch')"
+           @touchend="endDrawing"
+           @touchcancel="endDrawing">
+        <!-- Dessiner les points -->
+        <circle v-for="(point, index) in points" :key="index" :cx="point.x" :cy="point.y" :r="5" class="point"/>
+
+        <!-- Afficher les indices si showIndices est true -->
+        <g v-if="showIndices">
+          <text v-for="(point, index) in points" :key="'text-' + index" :x="point.x + 10" :y="point.y - 10" class="index-text">{{ index }}</text>
+        </g>
+
+        <!-- Dessiner les segments déjà tracés -->
+        <line v-for="(segment, index) in activeSegments" :key="index"
+              :x1="points[segment.start].x" :y1="points[segment.start].y"
+              :x2="points[segment.end].x" :y2="points[segment.end].y" class="segment"/>
+
+        <!-- Dessiner le segment en cours -->
+        <line v-if="drawing" :x1="points[startPoint].x" :y1="points[startPoint].y" :x2="currentPoint.x" :y2="currentPoint.y" class="segment"/>
       </svg>
     </div>
     <label>
@@ -28,14 +50,6 @@ export default {
       type: String,
       required: true
     },
-    totem: {
-      type: String,
-      required: true
-    },
-    viewBox: {
-      type: String,
-      default: "0 0 600 600"
-    },
     points: {
       type: Array,
       required: true
@@ -43,86 +57,120 @@ export default {
     segments: {
       type: Array,
       required: true
+    },
+    viewBox: {
+      type: String,
+      default: '0 0 200 200'
+    },
+    autoDrawSegments: {
+      type: Boolean,
+      default: false
+    },
+    showIndices: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
     return {
-      isValidated: false,
-      path: [],
-      drawing: false,
-      pathData: '',
-      usedSegments: new Set()
+      localSegments: [], // Initialisation sans segments
+      startPoint: null,
+      currentPoint: null,
+      drawing: false
     };
   },
+  computed: {
+    activeSegments() {
+      return this.autoDrawSegments ? this.segments : this.localSegments;
+    }
+  },
   methods: {
-    validate() {
-      if (this.isValidated) {
-        this.$store.dispatch('activateTotem', this.totem);
-        this.checkAllTotemsActive();
+    startDrawing(event, inputType) {
+      const point = this.getSVGPoint(event, inputType);
+      const closestPointIndex = this.getClosestPointIndex(point);
+      if (closestPointIndex !== null) {
+        this.startPoint = closestPointIndex;
+        this.currentPoint = this.points[closestPointIndex];
+        this.drawing = true;
       }
     },
-    checkAllTotemsActive() {
-      const allTotemsActive = Object.values(this.$store.state.totems).every(status => status);
-      if (allTotemsActive) {
-        this.$router.push({ name: 'TreasureResult' });
-      } else {
-        this.$router.push({ name: 'HuntingResult' });
-      }
-    },
-    startDrawing(event) {
-      const { clientX, clientY } = event.type.includes('touch') ? event.touches[0] : event;
-      const { x, y } = this.getSvgCoordinates(clientX, clientY);
-      this.path = [{ x, y }];
-      this.drawing = true;
-    },
-    draw(event) {
-      if (!this.drawing) return;
-      const { clientX, clientY } = event.type.includes('touch') ? event.touches[0] : event;
-      const { x, y } = this.getSvgCoordinates(clientX, clientY);
-
-      const lastPoint = this.path[this.path.length - 1];
-      const segmentKey = `${lastPoint.x},${lastPoint.y}-${x},${y}`;
-
-      if (!this.usedSegments.has(segmentKey)) {
-        this.path.push({ x, y });
-        this.usedSegments.add(segmentKey);
-        this.usedSegments.add(`${x},${y}-${lastPoint.x},${lastPoint.y}`); 
-        this.updatePathData();
+    drawLine(event, inputType) {
+      if (this.drawing) {
+        const point = this.getSVGPoint(event, inputType);
+        const closestPointIndex = this.getClosestPointIndex(point);
+        if (closestPointIndex !== null && closestPointIndex !== this.startPoint && !this.segmentExists(this.startPoint, closestPointIndex)) {
+          const newSegment = { start: this.startPoint, end: closestPointIndex };
+          if (this.verifySegment(newSegment)) {
+            this.localSegments.push(newSegment);
+            this.startPoint = closestPointIndex;
+            this.checkCompletion(); // Appeler la méthode de vérification de complétion
+          }
+        }
+        this.currentPoint = point;
       }
     },
     endDrawing() {
       this.drawing = false;
-      if (this.checkSolution()) {
-        alert('Correct!');
-      } else {
-        alert('Incorrect, try again.');
+      this.startPoint = null;
+      this.currentPoint = null;
+
+      if (!this.checkCompletion()) {
+        this.resetDrawing();
       }
-      this.path = [];
-      this.pathData = '';
-      this.usedSegments.clear();
     },
-    getSvgCoordinates(clientX, clientY) {
-      const svg = this.$refs.traceSvg;
-      const point = svg.createSVGPoint();
-      point.x = clientX;
-      point.y = clientY;
-      const { x, y } = point.matrixTransform(svg.getScreenCTM().inverse());
-      return { x, y };
+    resetDrawing() {
+      this.localSegments = [];
     },
-    updatePathData() {
-      this.pathData = this.path.map((point, index) => {
-        return `${index === 0 ? 'M' : 'L'}${point.x},${point.y}`;
-      }).join(' ');
+    getSVGPoint(event, inputType) {
+      const svg = event.target.closest('svg');
+      const pt = svg.createSVGPoint();
+
+      if (inputType === 'mouse') {
+        pt.x = event.clientX;
+        pt.y = event.clientY;
+      } else if (inputType === 'touch' && event.touches.length > 0) {
+        pt.x = event.touches[0].clientX;
+        pt.y = event.touches[0].clientY;
+      }
+
+      const cursorPoint = pt.matrixTransform(svg.getScreenCTM().inverse());
+      return { x: cursorPoint.x, y: cursorPoint.y };
     },
-    checkSolution() {
-      const requiredSegments = new Set(this.segments.map(({ from, to }) => `${from}-${to}`));
-      const drawnSegments = new Set(this.usedSegments);
-      for (let segment of requiredSegments) {
-        if (!drawnSegments.has(segment) && !drawnSegments.has(segment.split('-').reverse().join('-'))) {
-          return false;
+    getClosestPointIndex(point) {
+      let minDistance = Infinity;
+      let closestPointIndex = null;
+      this.points.forEach((p, index) => {
+        const distance = Math.sqrt((p.x - point.x) ** 2 + (p.y - point.y) ** 2);
+        if (distance < minDistance) {
+          minDistance = distance;
+          closestPointIndex = index;
         }
+      });
+      return minDistance < 10 ? closestPointIndex : null;
+    },
+    segmentExists(startIndex, endIndex) {
+      return this.localSegments.some(segment =>
+        (segment.start === startIndex && segment.end === endIndex) ||
+        (segment.start === endIndex && segment.end === startIndex));
+    },
+    verifySegment(newSegment) {
+      // Méthode de vérification du segment par rapport au tableau segments
+      return this.segments.some(segment =>
+        (segment.start === newSegment.start && segment.end === newSegment.end) ||
+        (segment.start === newSegment.end && segment.end === newSegment.start));
+    },
+    checkCompletion() {
+      if (this.localSegments.length !== this.segments.length) {
+        return false;
       }
-      return true;
+      const sortedLocalSegments = this.localSegments.map(seg => [seg.start, seg.end].sort().join('-')).sort();
+      const sortedSegments = this.segments.map(seg => [seg.start, seg.end].sort().join('-')).sort();
+
+      const isComplete = sortedLocalSegments.every((seg, index) => seg === sortedSegments[index]);
+      if (isComplete) {
+        console.log('Bravo');
+      }
+      return isComplete;
     }
   }
 };
@@ -141,10 +189,23 @@ export default {
   top: 0;
   left: 0;
   width: 100%;
-  height: auto;
+  height: 100%;
 }
-
-.trace-svg {
-  pointer-events: none; 
+svg {
+  width: 100%;
+  height: 100%;
+  border: 1px solid black;
+}
+.point {
+  fill: red;
+}
+.segment {
+  stroke: black;
+  stroke-width: 2;
+}
+.index-text {
+  fill: black;
+  font-size: 12px;
+  font-family: Arial, sans-serif;
 }
 </style>
