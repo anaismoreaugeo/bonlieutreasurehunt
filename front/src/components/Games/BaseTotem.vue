@@ -142,7 +142,7 @@ export default {
           closestPointIndex = index;
         }
       });
-      return minDistance < 10 ? closestPointIndex : null;
+      return minDistance < 30 ? closestPointIndex : null;
     },
     segmentExists(startIndex, endIndex) {
       return this.localSegments.some(segment =>
