@@ -7,6 +7,7 @@
     viewBox="0 0 351 513"
     :auto-draw-segments="false"
     :show-indices="false"
+    totem-id="totem4"
     @close="closeModal"
   >
   <svg viewBox="0 0 351 513" class="base-svg">

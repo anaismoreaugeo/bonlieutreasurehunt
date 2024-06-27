@@ -34,6 +34,8 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
+
 export default {
   name: 'BaseTotem',
   props: {
@@ -64,6 +66,10 @@ export default {
     showIndices: {
       type: Boolean,
       default: false
+    },
+    totemId: {  // Ajout d'une prop pour identifier le totem actuel
+      type: String,
+      required: true
     }
   },
   data() {
@@ -81,6 +87,7 @@ export default {
     }
   },
   methods: {
+    ...mapActions(['activateTotem']),
     startDrawing(event, inputType) {
       const point = this.getSVGPoint(event, inputType);
       const closestPointIndex = this.getClosestPointIndex(point);
@@ -165,6 +172,7 @@ export default {
       const isComplete = sortedLocalSegments.every((seg, index) => seg === sortedSegments[index]);
       if (isComplete) {
         console.log('Bravo');
+        this.activateTotem(this.totemId); // Activer le totem dans le store
         this.$emit('close'); // Fermer la modale actuelle
         this.showCongratsModal = true; // Afficher la modale de félicitations
       }

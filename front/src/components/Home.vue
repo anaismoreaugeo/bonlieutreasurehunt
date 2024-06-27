@@ -2,7 +2,7 @@
   <div class="home">
     <div class="instruction">
         <h2 class="bold">LA CHASSE AUX TOTEMS EST OUVERTE ! </h2>
-        <p>TROUVEZ ET SCANNEZ UN TOTEM</P>
+        <p>TROUVEZ ET SCANNEZ UN TOTEM</p>
     </div>
     <div class="scanner-container">
       <div class="scanner-placeholder">
@@ -33,15 +33,21 @@
   <Modal v-if="showCongratsModal" @close="showCongratsModal = false">
     <h1>Bravo !</h1>
   </Modal>
+  <!-- Instruction Modale -->
+  <Modal v-if="showInstructionModal" @close="showInstructionModal = false">
+    <InstructionsModal @close="showInstructionModal = false"/>
+  </Modal>
 </template>
 
 <script>
 import { QrcodeStream } from 'vue-qrcode-reader';
+import { mapGetters } from 'vuex';
 import AppModal from '../components/AppModal.vue';
 import AppTotem1 from '../components/Games/AppTotem1.vue';
 import AppTotem2 from '../components/Games/AppTotem2.vue';
 import AppTotem3 from '../components/Games/AppTotem3.vue';
 import AppTotem4 from '../components/Games/AppTotem4.vue';
+import InstructionsModal from './InstructionsModal.vue';
 import Modal from './UnlockTotem.vue';
 
 export default {
@@ -53,7 +59,8 @@ export default {
     AppTotem3,
     AppTotem4,
     QrcodeStream,
-    Modal
+    Modal,
+    InstructionsModal
   },
   data() {
     return {
@@ -62,16 +69,26 @@ export default {
       modalHeader: '',
       currentComponent: null,
       isScannerActive: false,
-      showCongratsModal: false
+      showCongratsModal: false,
+      showInstructionModal: false // État de la modale d'instruction
     };
   },
+  computed: {
+    ...mapGetters(['isActive'])
+  },
   mounted() {
+    // Vérifie si un paramètre totemCode est présent dans l'URL
     const urlParams = new URLSearchParams(window.location.search);
     const totemCode = urlParams.get('totemCode');
 
     if (totemCode) {
       this.code = totemCode;
       this.checkCode();
+    }
+
+    // Vérifie si aucun totem n'est activé
+    if (!this.isActive('totem1') && !this.isActive('totem2') && !this.isActive('totem3') && !this.isActive('totem4')) {
+      this.showInstructionModal = true;
     }
   },
   methods: {
