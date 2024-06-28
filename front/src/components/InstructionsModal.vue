@@ -1,7 +1,15 @@
 <template>
     <div>
-        <h2>BIENVENUE à vous chasseur de totem !</h2>
-        <p>Votre mission si vous l’acceptez : retrouver tout les totems et collecter des formes pour reconstituer le mur digital de bonlieu !</p>
+        <h2 style="text-transform: uppercase; font-size: 22px">
+          BIENVENUE à vous <br>
+          chasseur de totem !</h2>
+        <p style="text-transform: uppercase; font-size: 16px">
+          Votre mission si vous <br>
+          l’acceptez : retrouver tout <br>
+          les totems et collecter des <br>
+          formes pour reconstituer le <br>
+          mur digital de bonlieu !
+        </p>
         <img src="../assets/wall_instructions.png" alt="" srcset="">
     </div>
 </template>

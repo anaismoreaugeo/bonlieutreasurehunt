@@ -1,7 +1,10 @@
 <template>
   <div class="home">
     <div class="instruction">
-        <h2 class="bold">LA CHASSE AUX TOTEMS EST OUVERTE ! </h2>
+        <h2 class="bold" style="font-size: 22px">
+          LA CHASSE AUX <br>
+          TOTEMS EST OUVERTE !
+        </h2>
         <p>TROUVEZ ET SCANNEZ UN TOTEM</p>
     </div>
     <div class="scanner-container">
