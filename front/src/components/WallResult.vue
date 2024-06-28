@@ -1,28 +1,43 @@
 <template>
   <div class="wall-result">
     <div class="instruction">
-      <h2 class="bold">CHOISISSEZ VOTRE PLACE</h2>
-      <p>CLIQUEZ SUR UNE CASE</p>
+      <h2 class="bold" style="text-align: center">
+        VOTRE TOTEM A <br>
+        ETE AJOUTE EN <br>
+        POSITION <span style="text-decoration: underline">{{ logoPosition }}</span></h2>
+      <p style="text-align: center">
+        Rendez-vous sur le mur <br>
+        digital présent dans le <br>
+        forum pour voir votre <br>
+        contribution et celle des <br>
+        autres participants !
+      </p>
     </div>
-    <div class="result-container">
-      <div class="grid">
-        <div 
-          v-for="index in 24" 
-          :key="index" 
-          class="grid-cell" 
-          @click="selectCell(index)">
-        </div>
-      </div>
+    <div class="result-container" style="position: relative;">
+      <img src="@/assets/logo-presentation.png" alt="" style="transform: scale(1.13);">
+      <Logo :logo="this.logo" :is-positioned="true" />
     </div>
   </div>
 </template>
 <script>
+import Logo from "@/components/LogoTotem.vue";
+
 export default {
   name: 'WallResult',
-  methods: {
-    selectCell(index) {
-      console.log('Cell selected:', index);
+  components: {Logo},
+  data() {
+    return {
+      logo: null,
+      logoPosition: 'F1'
+    };
+  },
+  async created() {
+    this.logo = this.$store.getters.getFullLogo()
+    this.logoPosition = this.$store.getters.getLogoPositionOnWall()
+
+    if (!this.logo) {
+      await this.$router.push({name: 'Home'});
     }
-  }
+  },
 };
 </script>
