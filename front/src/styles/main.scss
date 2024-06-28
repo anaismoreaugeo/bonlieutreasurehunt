@@ -7,7 +7,7 @@
   src: url('/src/styles/fonts/MaisonMG-Regular.otf') format('opentype');
 }
 
-$header-height: 70px;
+$header-height: 100px;
 $footer-height: 60px;
 $header-bg-color: #333;
 $footer-bg-color: #333;
@@ -81,7 +81,7 @@ body {
   img {
     place-items: center;
     margin: 0 auto;
-    max-width: 50px;
+    // max-width: 50px;
   }
 }
 
