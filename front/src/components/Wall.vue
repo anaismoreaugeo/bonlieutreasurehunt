@@ -6,6 +6,30 @@
       </h2>
     </div>
     <div class="result-container" style="position: relative; display: grid !important; grid-template-columns: repeat(12, 100px); gap: 30px;">
+      <div style="
+        position: absolute;
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        justify-content: space-around;
+      ">
+        <div v-for="col in cols" :key="col" style="font-weight: 400">
+          {{ col }}
+        </div>
+      </div>
+
+      <div style="
+        position: absolute;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        justify-content: space-evenly;
+        left: -20px;
+      ">
+        <div v-for="row in rows" :key="row" style="font-weight: 400">
+          {{ row }}
+        </div>
+      </div>
       <div v-for="col in cols" :key="col">
         <div style="margin-top: 10px; margin-bottom: 10px" v-for="row in rows" :key="row">
           <Logo v-if="logoAtPosition(row, col)" :logo="logoAtPosition(row, col)" :is-positioned="false" :id="row + col" />

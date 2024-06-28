@@ -8,11 +8,11 @@
     <div class="content">
       <div class="center-square">
         <SliderSquare class="inner-square top-left" :colorClass="colors[Category.Canard]" :id="Category.Canard"/>
-        <SliderSquare v-if="this.totem2Available" class="inner-square top-right" :colorClass="colors[Category.Poisson]" :id="Category.Poisson" />
+        <SliderSquare v-if="this.totem3Available" class="inner-square top-right" :colorClass="colors[Category.Poisson]" :id="Category.Poisson" />
         <img v-else src="@/assets/poisson-lock.png" alt="">
-        <SliderSquare v-if="this.totem3Available" class="inner-square bottom-left" :colorClass="colors[Category.Poulpe]" :id="Category.Poulpe" />
+        <SliderSquare v-if="this.totem4Available" class="inner-square bottom-left" :colorClass="colors[Category.Poulpe]" :id="Category.Poulpe" />
         <img v-else src="@/assets/poulpe-lock.png" alt="">
-        <SliderSquare v-if="this.totem4Available" class="inner-square bottom-right" :colorClass="colors[Category.Bateau]" :id="Category.Bateau" />
+        <SliderSquare v-if="this.totem2Available" class="inner-square bottom-right" :colorClass="colors[Category.Bateau]" :id="Category.Bateau" />
         <img v-else src="@/assets/bateau-lock.png" alt="">
       </div>
     </div>
