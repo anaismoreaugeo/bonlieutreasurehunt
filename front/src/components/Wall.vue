@@ -5,10 +5,10 @@
         MUR DES SYMBOLES
       </h2>
     </div>
-    <div class="result-container" style="position: relative; display: grid !important; grid-template-columns: repeat(12, 100px);">
+    <div class="result-container" style="position: relative; display: grid !important; grid-template-columns: repeat(12, 100px); gap: 30px;">
       <div v-for="col in cols" :key="col">
-        <div v-for="row in rows" :key="row">
-          <Logo v-if="logoAtPosition(row, col)" :logo="logoAtPosition(row, col)" :is-positioned="false" />
+        <div style="margin-top: 10px; margin-bottom: 10px" v-for="row in rows" :key="row">
+          <Logo v-if="logoAtPosition(row, col)" :logo="logoAtPosition(row, col)" :is-positioned="false" :id="row + col" />
           <div v-else>
             <img :src="this.murImages[getIndex(row, col)]" alt="" width="100" height="100">
           </div>
@@ -55,8 +55,6 @@ export default {
       try {
         const result = await axios.get('/api/list-logos');
 
-        console.log(result)
-
         const data = result.data.data;
         this.logos = data.logos;
         this.positions = data.positions;
@@ -87,11 +85,7 @@ export default {
     logoAtPosition(row, col) {
       const position = `${col}${row}`;
 
-      console.log(this.positions, position);
-
       const index = this.positions.indexOf(position);
-
-      console.log('having logo at : ', index !== -1 ? this.logos[index] : null)
 
       return index !== -1 ? this.logos[index] : null;
     }

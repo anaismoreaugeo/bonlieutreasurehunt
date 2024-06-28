@@ -7,11 +7,47 @@ app.use(bodyParser.json());
 const fs = require('fs');
 const path = require('path');
 
-const filePath = path.join(__dirname, 'data.json');
+const filePath = path.join('/tmp', 'data.json');
 
 function checkAndCreateFile() {
     if (!fs.existsSync(filePath)) {
-        fs.writeFileSync(filePath, JSON.stringify({ logos: [], positions: [], nextIndex: 0 }), 'utf8');
+        const defaultData = {
+            logos: [
+                {
+                    "0": { "form": 2, "color": "yellow-stroke" },
+                    "1": { "form": 2, "color": "yellow-stroke" },
+                    "2": { "form": 2, "color": "yellow-stroke" },
+                    "3": { "form": 2, "color": "yellow-stroke" }
+                },
+                {
+                    "0": { "form": 1, "color": "blue-stroke" },
+                    "1": { "form": 0, "color": "cls-1" },
+                    "2": { "form": 0, "color": "cls-1" },
+                    "3": { "form": 1, "color": "green-stroke" }
+                },
+                {
+                    "0": { "form": 0, "color": "red-stroke" },
+                    "1": { "form": 1, "color": "green-stroke" },
+                    "2": { "form": 1, "color": "blue-stroke" },
+                    "3": { "form": 1, "color": "yellow-stroke" }
+                },
+                {
+                    "0": { "form": 2, "color": "yellow-stroke" },
+                    "1": { "form": 1, "color": "yellow-stroke" },
+                    "2": { "form": 1, "color": "yellow-stroke" },
+                    "3": { "form": 1, "color": "yellow-stroke" }
+                },
+                {
+                    "0": { "form": 2, "color": "blue-stroke" },
+                    "1": { "form": 1, "color": "blue-stroke" },
+                    "2": { "form": 1, "color": "blue-stroke" },
+                    "3": { "form": 1, "color": "blue-stroke" }
+                }
+            ],
+            positions: ["C4", "K4", "D3", "B2", "L1"],
+            nextIndex: 2
+        };
+        fs.writeFileSync(filePath, JSON.stringify(defaultData, null, 2), 'utf8');
     }
 }
 
@@ -78,6 +114,8 @@ app.post('/api/add-logo', (req, res) => {
 });
 
 app.get('/api/list-logos', (req, res) => {
+    checkAndCreateFile()
+
     const data = fs.readFileSync(filePath, 'utf8');
     const json = JSON.parse(data);
 

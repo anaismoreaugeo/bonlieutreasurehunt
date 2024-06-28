@@ -1,5 +1,5 @@
 <template>
-  <div style="
+  <div :id="'animate-' + id" style="
     display: grid;
     grid-template-columns: repeat(2, 100px);
     justify-content: center;
@@ -83,6 +83,10 @@ export default {
   props: {
     logo: {},
     isPositioned: Boolean,
+    id: {
+      type: String,
+      required: false
+    }
   },
   data() {
     return {
@@ -91,47 +95,22 @@ export default {
   },
   mounted() {
     if (!this.isPositioned) {
-      console.log('mounted')
       this.applyRandomAnimation();
     }
   },
   methods: {
-    getRandomAnimation() {
-      return this.animations[Math.floor(Math.random() * this.animations.length)];
-    },
     applyRandomAnimation() {
-      const div = document.getElementsByClassName("animate-logo");
-      // const prevAnimations = Array.from(svgs).map(svg => svg.dataset.prevAnimation);
+      const divs = document.querySelectorAll(`#animate-${this.id}`);
 
-      console.log(div)
+      console.log(divs)
 
-      // div.style.animation = `fadeOut 1s`;
+      divs.forEach(div => {
+        const randomAnimation = this.animations[Math.floor(Math.random() * this.animations.length)]
 
-      const randomAnimation = this.getRandomAnimation();
-      const randomDuration = (Math.random() * 2 + 1).toFixed(1); // Random duration between 1s and 3s
-      div.style.animation = `fadeIn 1s, ${randomAnimation} ${randomDuration}s infinite`;
+        console.log(randomAnimation)
 
-      // console.log(svgs)
-
-      /* svgs.forEach((svg) => {
-        console.log('adding style on svg')
-
-        svg.style.animation = `fadeOut 1s`;
-        svg.addEventListener(
-            "animationend",
-            () => {
-              // const excludeAnimations = prevAnimations.slice(Math.max(0, index - 1), index + 2);
-              const randomAnimation = this.getRandomAnimation();
-              const randomDuration = (Math.random() * 2 + 1).toFixed(1); // Random duration between 1s and 3s
-              svg.style.animation = `fadeIn 1s, ${randomAnimation} ${randomDuration}s infinite`;
-              // svg.dataset.prevAnimation = randomAnimation;
-            },
-            { once: true }
-        );
-      }); */
-
-      const randomInterval = Math.floor(Math.random() * (45000 - 30000 + 1)) + 30000;
-      setTimeout(this.applyRandomAnimation, randomInterval);
+        div.classList.add(randomAnimation)
+      });
     },
   },
 };
@@ -140,33 +119,33 @@ export default {
 <style scoped>
 @keyframes moveRight {
   0% {
-    transform: translateX(-10%);
+    transform: translateX(-5%);
   }
   50% {
-    transform: translateX(10%);
+    transform: translateX(5%);
   }
   100% {
-    transform: translateX(-10%);
+    transform: translateX(-5%);
   }
 }
 @keyframes pulse {
   0% {
-    transform: scale(1);
+    transform: scale(0.6);
   }
   50% {
-    transform: scale(1.5);
+    transform: scale(1);
   }
   100% {
-    transform: scale(1);
+    transform: scale(0.6);
   }
 }
 @keyframes bounce {
   0%,
   100% {
-    transform: translateY(-10%);
+    transform: translateY(-5%);
   }
   50% {
-    transform: translateY(10%);
+    transform: translateY(5%);
   }
 }
 @keyframes fadeOut {
@@ -186,7 +165,15 @@ export default {
   }
 }
 
-/*#logo-container {
+.animate-logo.moveRight {
   animation: fadeIn 1s, moveRight 2s infinite;
-}*/
+}
+
+.animate-logo.pulse {
+  animation: fadeIn 1s, pulse 2s infinite;
+}
+
+.animate-logo.bounce {
+  animation: fadeIn 1s, bounce 2s infinite;
+}
 </style>
