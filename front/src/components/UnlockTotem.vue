@@ -1,45 +1,61 @@
 <template>
-    <div class="modal-overlay" @click="close">
-      <div class="modal-content" @click.stop>
-        <slot></slot>
-        <button @click="close">Fermer</button>
-      </div>
+  <div>
+    <h2>TOTEM DÉBLOQUÉ !</h2>
+    <div class="flex-center" v-html="svg"></div>
+    <p>Ce totem vous permet d'avoir des nouvelles formes pour créer votre propre totem :</p>
+    <div class="unlocked-shapes">
+      <div v-for="(shape, index) in unlockedShapes" :key="index" class="shape-item" v-html="shape"></div>
     </div>
-  </template>
-  
-  <script>
-  export default {
-    methods: {
-      close() {
-        this.$emit('close');
-      }
+    <p>Trouvez tous les totems pour débloquer toutes les formes</p>
+    <button @click="close" class="ui-btn-black">Continuer</button>
+  </div>
+</template>
+
+<script>
+export default {
+  props: {
+    svg: {
+      type: String,
+      required: true
+    },
+    svgName: {
+      type: String,
+      required: false
+    },
+    unlockedShapes: {
+      type: Array,
+      default: () => []
     }
-  };
-  </script>
-  
-  <style scoped>
-  .modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
+  },
+  methods: {
+    close() {
+      this.$router.push({ name: "HuntingResult" });
+      this.$emit('close');
+    }
   }
-  
-  .modal-content {
-    background: white;
-    padding: 20px;
-    border-radius: 5px;
-    text-align: center;
-  }
-  
-  button {
-    margin-top: 10px;
-  }
-  </style>
-  
+};
+</script>
+
+<style scoped>
+.unlocked-shapes {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.shape {
+  max-width: 33vw;
+  max-height: 33vh;
+}
+
+.flex-center {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.shape-item {
+  margin: 0 10px;
+}
+</style>
