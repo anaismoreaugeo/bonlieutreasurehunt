@@ -29,10 +29,17 @@
       <component :is="currentComponent" @close="popCongratModal"></component>
     </template>
   </AppModal>
+  <!-- Instruction Modale -->
+  <AppModal v-if="showInstructionModal" @close="showInstructionModal = false">
+    <template #body>
+      <InstructionsModal @close="showInstructionModal = false"/>
+    </template>
+  </AppModal>
   <!-- Modale de félicitations -->
   <AppModal v-if="showCongratsModal" @close="showCongratsModal = false">
     <template #body>
       <UnlockTotem 
+      v-if="showCongratsModal"
       @close="showCongratsModal = false"
       :svg="getSvg(code)"
       :svgName="getSvgName(code)"
@@ -40,10 +47,6 @@
       />
     </template>
   </AppModal>
-  <!-- Instruction Modale -->
-  <Modal v-if="showInstructionModal" @close="showInstructionModal = false">
-    <InstructionsModal @close="showInstructionModal = false"/>
-  </Modal>
 </template>
 
 <script>
