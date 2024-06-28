@@ -6,10 +6,12 @@
       </h2>
     </div>
     <div class="result-container" style="position: relative; display: grid !important; grid-template-columns: repeat(12, 100px);">
-      <div v-for="index in 72" :key="index">
-        <Logo v-if="this.logos && this.logos[index]" :logo="this.logos[index]" :is-positioned="false" />
-        <div v-else>
-          <img :src="this.murImages[index]" alt="" width="100" height="100">
+      <div v-for="col in cols" :key="col">
+        <div v-for="row in rows" :key="row">
+          <Logo v-if="logoAtPosition(row, col)" :logo="logoAtPosition(row, col)" :is-positioned="false" />
+          <div v-else>
+            <img :src="this.murImages[getIndex(row, col)]" alt="" width="100" height="100">
+          </div>
         </div>
       </div>
     </div>
@@ -25,9 +27,12 @@ export default {
   components: { Logo },
   data() {
     return {
-      logos: null,
+      logos: [],
+      positions: [],
       murImages: [],
-      intervalId: null // Ajout de la propriété intervalId
+      intervalId: null, // Ajout de la propriété intervalId
+      rows: ['1', '2', '3', '4', '5', '6'],
+      cols: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L']
     };
   },
   async created() {
@@ -35,8 +40,8 @@ export default {
   },
   mounted() {
     this.murImages = this.generateRandomMurImages(73);
-    // Démarre l'intervalle pour appeler fetchLogos toutes les 30 secondes
-    this.intervalId = setInterval(this.fetchLogos, 30000);
+    // Démarre l'intervalle pour appeler fetchLogos toutes les 10 secondes
+    this.intervalId = setInterval(this.fetchLogos, 10000);
   },
   beforeUnmount() {
     // Nettoyer l'intervalle pour éviter les fuites de mémoire
@@ -49,8 +54,12 @@ export default {
       console.log('fetchingLogo')
       try {
         const result = await axios.get('/api/list-logos');
-        // console.log(result.data.logos);
-        this.logos = result.data.logos;
+
+        console.log(result)
+
+        const data = result.data.data;
+        this.logos = data.logos;
+        this.positions = data.positions;
       } catch (error) {
         console.error(error);
         alert('Impossible de récupérer les logos.');
@@ -66,6 +75,25 @@ export default {
         randomImages.push(this.getRandomImage());
       }
       return randomImages;
+    },
+    getIndex(row, col) {
+      // Convertir la colonne en index (A=0, B=1, ..., L=11)
+      const colIndex = col.charCodeAt(0) - 'A'.charCodeAt(0);
+      // Convertir la ligne en index (1=0, 2=1, ..., 6=5)
+      const rowIndex = parseInt(row) - 1;
+      // Calculer l'index total dans une grille de 12 colonnes
+      return rowIndex * 12 + colIndex;
+    },
+    logoAtPosition(row, col) {
+      const position = `${col}${row}`;
+
+      console.log(this.positions, position);
+
+      const index = this.positions.indexOf(position);
+
+      console.log('having logo at : ', index !== -1 ? this.logos[index] : null)
+
+      return index !== -1 ? this.logos[index] : null;
     }
   }
 };

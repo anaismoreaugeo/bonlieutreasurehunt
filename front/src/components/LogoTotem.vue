@@ -4,8 +4,7 @@
     grid-template-columns: repeat(2, 100px);
     justify-content: center;
   "
-       id="logo-container"
-  v-bind:style="[this.isPositionned ? {
+  v-bind:style="[this.isPositioned ? {
     position: 'absolute',
     left: '50%',
     top: '53%',
@@ -15,10 +14,6 @@
   "
    v-bind:class="!this.isPositioned ? 'animate-logo' : ''"
   >
-  <!-- <div
-      :class="['logo-container', { 'animate-logo': !isPositioned }]"
-      :style="logoContainerStyle"
-  > -->
     <svg style="margin-left: auto; margin-top: auto" v-bind:style="[!this.isPositioned ? {width: '50px', height: '50px'} : {}]" v-if="this.logo[Category.Canard].form === Forms.Form1" :class="this.logo[Category.Canard].color" width="80" height="80" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
       <path d="M40.9142 75.5858L75.5858 40.9142C76.3668 40.1332 76.3668 38.8668 75.5858 38.0858L40.9142 3.41421C40.1332 2.63316 38.8668 2.63316 38.0858 3.41421L3.41422 38.0858C2.63317 38.8668 2.63317 40.1332 3.41422 40.9142L38.0858 75.5858C38.8668 76.3668 40.1332 76.3668 40.9142 75.5858Z" stroke-width="5" stroke-linejoin="round"/>
     </svg>
@@ -105,7 +100,7 @@ export default {
       return this.animations[Math.floor(Math.random() * this.animations.length)];
     },
     applyRandomAnimation() {
-      const div = document.getElementById("logo-container");
+      const div = document.getElementsByClassName("animate-logo");
       // const prevAnimations = Array.from(svgs).map(svg => svg.dataset.prevAnimation);
 
       console.log(div)
@@ -191,7 +186,7 @@ export default {
   }
 }
 
-#logo-container {
+/*#logo-container {
   animation: fadeIn 1s, moveRight 2s infinite;
-}
+}*/
 </style>

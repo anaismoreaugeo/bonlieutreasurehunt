@@ -28,12 +28,12 @@ export default {
   data() {
     return {
       logo: null,
-      logoPosition: 'F1'
+      logoPosition: null
     };
   },
   async created() {
     this.logo = this.$store.getters.getFullLogo()
-    this.logoPosition = this.$store.getters.getLogoPositionOnWall()
+    this.logoPosition = this.$store.getters.getLogoPositionOnWall().position
 
     if (!this.logo) {
       await this.$router.push({name: 'Home'});

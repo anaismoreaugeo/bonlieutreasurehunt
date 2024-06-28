@@ -8,9 +8,12 @@
     <div class="content">
       <div class="center-square">
         <SliderSquare class="inner-square top-left" :colorClass="colors[Category.Canard]" :id="Category.Canard"/>
-        <SliderSquare class="inner-square top-right" :colorClass="colors[Category.Poisson]" :id="Category.Poisson" />
-        <SliderSquare class="inner-square bottom-left" :colorClass="colors[Category.Poulpe]" :id="Category.Poulpe" />
-        <SliderSquare class="inner-square bottom-right" :colorClass="colors[Category.Bateau]" :id="Category.Bateau" />
+        <SliderSquare v-if="this.totem2Available" class="inner-square top-right" :colorClass="colors[Category.Poisson]" :id="Category.Poisson" />
+        <img v-else src="@/assets/poisson-lock.png" alt="">
+        <SliderSquare v-if="this.totem3Available" class="inner-square bottom-left" :colorClass="colors[Category.Poulpe]" :id="Category.Poulpe" />
+        <img v-else src="@/assets/poulpe-lock.png" alt="">
+        <SliderSquare v-if="this.totem4Available" class="inner-square bottom-right" :colorClass="colors[Category.Bateau]" :id="Category.Bateau" />
+        <img v-else src="@/assets/bateau-lock.png" alt="">
       </div>
     </div>
     <div class="bottom-dots" v-if="!this.isValidated">
@@ -21,11 +24,11 @@
       <button class="dot black" v-bind:style="[this.selectedColor === Colors.Default ? {'border': '2px solid black'} : {}]" @click="changeColor(Colors.Default)"></button>
     </div>
     <div class="treasure-validation">
-      <button class="ui-btn-black" v-if="!this.isValidated" @click="validate">VALIDER</button>
+      <button class="ui-btn-black" v-if="!this.isValidated && totem1Available && totem2Available && totem3Available && totem4Available" @click="validate">VALIDER</button>
       <button class="ui-btn-black" v-if="this.isValidated" @click="downloadImage">
         <img src="@/assets/download.svg">TELECHARGER
       </button>
-      <button class="ui-btn-black" v-if="this.isValidated" @click="placeOnWall">Découvrir mon totem</button>
+      <button class="ui-btn-black" v-if="this.isValidated" @click="placeOnWall">DECOUVRIR MON TOTEM SUR LE MUR</button>
     </div>
   </div>
 </template>
@@ -56,7 +59,11 @@ export default {
       instructionTitle: "PERSONNALISEZ VOTRE PICTOGRAMME",
       instructionText1: "CLIQUEZ SUR UNE PARTIE POUR CHANGER LA FORME ET LA COULEUR",
       instructionText2: "AJOUTEZ VOTRE PIERRE A L'EDIFICE DU MUR DE BONLIEU",
-      selectedColor: null
+      selectedColor: null,
+      totem1Available: null,
+      totem2Available: null,
+      totem3Available: null,
+      totem4Available: null,
     };
   },
   async created() {
@@ -64,6 +71,15 @@ export default {
 
     if (isValidated) {
       this.isValidated = isValidated.isValidated
+    }
+
+    this.totem1Available = this.$store.getters.isActive('totem1')
+    this.totem2Available = this.$store.getters.isActive('totem2')
+    this.totem3Available = this.$store.getters.isActive('totem3')
+    this.totem4Available = this.$store.getters.isActive('totem4')
+
+    if (!this.totem1Available) {
+      await this.$router.push({name: 'Home'});
     }
 
     if (this.isValidated) {
