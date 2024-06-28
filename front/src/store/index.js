@@ -24,10 +24,10 @@ export const Category = {
 export default createStore({
   state: {
     totems: {
-      totem1: true,
-      totem2: true,
-      totem3: true,
-      totem4: true,
+      totem1: false,
+      totem2: false,
+      totem3: false,
+      totem4: false,
     },
     logoStructure: {},  // Stocker les objets contenant currentIndex et colorClass,
     selectedSquare: null,
