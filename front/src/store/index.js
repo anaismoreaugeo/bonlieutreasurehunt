@@ -33,6 +33,7 @@ export default createStore({
     selectedSquare: null,
     selectedColor: null,
     isValidated: false,
+    logoPositionOnWall: null,
   },
   mutations: {
     activateTotem(state, totem) {
@@ -52,6 +53,9 @@ export default createStore({
     },
     updateIsValidated(state, isValidated) {
       state.isValidated = isValidated
+    },
+    updateLogoPositionOnWall(state, position) {
+      state.logoPositionOnWall = position
     }
   },
   actions: {
@@ -69,6 +73,9 @@ export default createStore({
     },
     updateIsValidated({ commit }, isValidated) {
       commit('updateIsValidated', isValidated)
+    },
+    updateLogoPositionOnWall({ commit }, position) {
+      commit('updateLogoPositionOnWall', position)
     }
   },
   getters: {
@@ -77,6 +84,7 @@ export default createStore({
     getFullLogo: (state) => () => state.logoStructure,
     getSelectedSquare: (state) => () => state.selectedSquare,
     getSelectedColor: (state) => () => state.selectedColor,
-    isValidated: (state) => () => state.isValidated
+    isValidated: (state) => () => state.isValidated,
+    getLogoPositionOnWall: (state) => () => state.logoPositionOnWall
   },
 });

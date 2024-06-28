@@ -13,9 +13,9 @@
         autres participants !
       </p>
     </div>
-    <div class="result-container" style="position: relative">
-      <img src="@/assets/logo-presentation.png" alt="">
-      <Logo :logo="this.logo" />
+    <div class="result-container" style="position: relative;">
+      <img src="@/assets/logo-presentation.png" alt="" style="transform: scale(1.13);">
+      <Logo :logo="this.logo" :is-positioned="true" />
     </div>
   </div>
 </template>
@@ -33,6 +33,7 @@ export default {
   },
   async created() {
     this.logo = this.$store.getters.getFullLogo()
+    this.logoPosition = this.$store.getters.getLogoPositionOnWall()
 
     if (!this.logo) {
       await this.$router.push({name: 'Home'});

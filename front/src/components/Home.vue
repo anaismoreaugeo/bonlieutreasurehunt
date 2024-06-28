@@ -58,6 +58,11 @@ export default {
       isScannerActive: false
     };
   },
+  async created() {
+    if (this.$route.query.path) {
+      await this.$router.push({path: this.$route.query.path});
+    }
+  },
   methods: {
     checkCode() {
       const totem = this.getTotemByCode(this.code);

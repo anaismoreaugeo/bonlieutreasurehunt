@@ -119,11 +119,11 @@ export default {
 
     async placeOnWall() {
       try {
-        console.log(this.$store.getters.getFullLogo())
-
-        await axios.post('/api/add-logo', {
+        const result = await axios.post('/api/add-logo', {
           logo: this.$store.getters.getFullLogo()
         })
+
+        this.$store.dispatch('updateLogoPositionOnWall', { position: result.data.message });
       } catch (error) {
         console.error(error)
         alert('Impossible de sauvegarder votre logo.')
