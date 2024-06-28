@@ -56,7 +56,7 @@ body {
 .ui-btn-black {
   background-color: #333;
   color: white;
-  font-size: 10px;
+  font-size: 20px;
   margin-top: 10px;
    padding: 0.5rem 1rem;
   border: none;
@@ -516,4 +516,12 @@ main {
 
 .opacity-15{
   opacity: 15%;
+}
+
+.max-33-vw{
+  max-width: 33vw;
+}
+
+.max-33-vh{
+  max-height: 33vh;
 }

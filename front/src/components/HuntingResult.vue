@@ -20,11 +20,11 @@
           <div class="square-container">
             <img class="rec poisson" src="@/assets/rec-poisson.png">
             <div class="square">
-              <button> <img src="@/assets/POISSON.png"></button>
+              <button> <img src="@/assets/BATEAU.png"></button>
             </div>
           </div>
           <div class="content">
-            <p>LE POISSON</p>
+            <p>L'EXTRATERRESTRE</p>
           </div>
         </div>
         <div class="result-box left" :class="{ active: isActive('totem3') }">
@@ -32,12 +32,12 @@
             <img class="rec poulpe" src="@/assets/rec-poulpe.png">
             <div class="square">
               <button>
-                <img src="@/assets/POULPE.png">
+                <img src="@/assets/POISSON.png">
               </button>
             </div>
           </div>
           <div class="content">
-           <p>LE POULPE</p>
+           <p>LE POISSON</p>
           </div>
         </div>
         <div class="result-box right" :class="{ active: isActive('totem4') }">
@@ -45,12 +45,12 @@
             <img class="rec bateau" src="@/assets/rec-bateau.png">
             <div class="square">
               <button>
-                <img src="@/assets/BATEAU.png">
+                <img src="@/assets/POULPE.png">
               </button>
             </div>
           </div>
           <div class="content">
-            <p>LE BATEAU</p>
+            <p>LE POULPE</p>
           </div>
         </div>
       </div>
