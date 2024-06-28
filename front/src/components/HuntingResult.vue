@@ -1,60 +1,55 @@
 <template>
-    <div class="hunting-result">
-      <div class="instruction">
-        <h2 class="bold">CARNET DE TOTEMS </h2>
-        <p>TROUVEZ TOUS LES TOTEMS POUR AJOUTER VOTRE SYMBOLE SUR LE MUR DE BONLIEU</p>
+  <div class="hunting-result">
+    <div class="instruction">
+      <h2 class="bold">CARNET DE TOTEMS</h2>
+      <p>TROUVEZ TOUS LES TOTEMS POUR AJOUTER VOTRE SYMBOLE SUR LE MUR DE BONLIEU</p>
+    </div>
+
+    <div class="result-container">
+      <div class="result-container-row">
+        <div class="totem-place">
+          <div class="svg-container">
+            <svg :class="{ 'totem-active': isActive('totem1'), 'totem-inactive': !isActive('totem1') }" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 349 514" version="1.1">
+              <path :class="{'totem1-color': isActive('totem1')}" style="stroke:none;fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;" d="M 268.117188 257 L 345.621094 179.5 C 347.09375 178.027344 347.917969 176.039062 347.917969 173.957031 C 347.917969 171.875 347.09375 169.875 345.621094 168.410156 L 179.507812 2.296875 C 176.449219 -0.765625 171.46875 -0.765625 168.410156 2.296875 L 2.296875 168.402344 C 0.824219 169.875 0 171.863281 0 173.945312 C 0 176.027344 0.824219 178.027344 2.296875 179.488281 L 79.796875 256.988281 L 2.296875 334.496094 C -0.761719 337.558594 -0.761719 342.523438 2.296875 345.597656 L 168.410156 511.703125 C 169.882812 513.175781 171.871094 514 173.953125 514 C 176.035156 514 178.035156 513.175781 179.5 511.703125 L 345.609375 345.597656 C 348.667969 342.535156 348.667969 337.566406 345.609375 334.496094 L 268.109375 256.988281 Z M 18.941406 173.945312 L 173.953125 18.9375 L 328.964844 173.945312 L 257.007812 245.890625 L 179.5 168.371094 C 176.550781 165.421875 171.347656 165.421875 168.398438 168.371094 L 90.886719 245.890625 Z M 245.917969 256.988281 L 173.953125 328.941406 L 101.996094 256.988281 L 173.953125 185.023438 Z M 173.953125 495.058594 L 18.941406 340.050781 L 90.898438 268.097656 L 168.410156 345.605469 C 169.945312 347.140625 171.945312 347.90625 173.953125 347.90625 C 175.964844 347.90625 177.972656 347.140625 179.5 345.605469 L 257.007812 268.097656 L 328.964844 340.050781 Z M 125.816406 170.90625 C 125.816406 158.210938 115.53125 147.914062 102.832031 147.914062 C 90.136719 147.914062 79.828125 158.21875 79.828125 170.90625 C 79.828125 183.589844 90.136719 193.898438 102.832031 193.898438 C 115.53125 193.898438 125.816406 183.601562 125.816406 170.90625 Z M 245.09375 193.898438 C 257.792969 193.898438 268.089844 183.601562 268.089844 170.90625 C 268.089844 158.210938 257.792969 147.914062 245.09375 147.914062 C 232.398438 147.914062 222.09375 158.21875 222.09375 170.90625 C 222.09375 183.589844 232.398438 193.898438 245.09375 193.898438 Z"/>
+            </svg>
+          </div>
+          <p :class="{ 'totem-active': isActive('totem1'), 'totem-inactive': !isActive('totem1') }">LE CANARD</p>
+        </div>
+        <div class="totem-place">
+          <div class="svg-container">
+            <svg :class="{ 'totem-active': isActive('totem2'), 'totem-inactive': !isActive('totem2') }" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 348 194" version="1.1">
+              <path :class="{'totem2-color': isActive('totem2')}" style="fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:4;" d="M 71.454315 51.555735 L 24.911997 51.555735 L 1.810693 27.522995 L 94.810401 27.522995 Z M 71.454315 51.555735 " transform="matrix(3.587629,0,0,3.592593,0,0)"/>
+              <path :class="{'totem2-color': isActive('totem2')}" style="fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:4;" d="M 24.79985 26.478093 L 48.310547 2.444265 L 71.822333 26.478093 " transform="matrix(3.587629,0,0,3.592593,0,0)"/>
+              <path :class="{'totem2-color': isActive('totem2')}" style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 42.563802 21.252497 C 43.717942 21.252497 44.653231 20.317413 44.653231 19.162693 C 44.653231 18.009061 43.717942 17.07289 42.563802 17.07289 C 41.409662 17.07289 40.473285 18.009061 40.473285 19.162693 C 40.473285 20.317413 41.409662 21.252497 42.563802 21.252497 Z M 42.563802 21.252497 " transform="matrix(3.587629,0,0,3.592593,0,0)"/>
+              <path :class="{'totem2-color': isActive('totem2')}" style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 55.10255 21.252497 C 56.25669 21.252497 57.193068 20.317413 57.193068 19.162693 C 57.193068 18.009061 56.25669 17.07289 55.10255 17.07289 C 53.948411 17.07289 53.013122 18.009061 53.013122 19.162693 C 53.013122 20.317413 53.948411 21.252497 55.10255 21.252497 Z M 55.10255 21.252497 " transform="matrix(3.587629,0,0,3.592593,0,0)"/>
+            </svg>
+          </div>
+          <p :class="{ 'totem-active': isActive('totem2'), 'totem-inactive': !isActive('totem2') }">L'EXTRATERRESTRE</p>
+        </div>
       </div>
-      <div class="result-container">
-        <div class="result-box left" :class="{ active: isActive('totem1') }">
-          <div class="square-container">
-            <img class="rec" src="@/assets/rec-canard.png">
-            <div class="square">
-              <button><img src="@/assets/CANARD.png"></button>
-            </div>
+      <div class="result-container-row">
+        <div class="totem-place">
+          <div class="svg-container">
+            <svg :class="{ 'totem-active': isActive('totem3'), 'totem-inactive': !isActive('totem3') }" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 347 130" version="1.1">
+              <path :class="{ 'totem3-color': isActive('totem3')}" style="stroke:none;fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;" d="M 344.601562 60.882812 L 287.765625 3.890625 C 286.695312 2.816406 285.238281 2.214844 283.722656 2.214844 L 166.570312 2.214844 C 163.417969 2.214844 160.859375 4.777344 160.859375 7.941406 L 160.859375 55.316406 L 105.296875 3.734375 C 104.238281 2.753906 102.855469 2.207031 101.414062 2.207031 L 8.804688 2.207031 C 6.496094 2.207031 4.414062 3.605469 3.527344 5.746094 C 2.640625 7.886719 3.128906 10.351562 4.765625 11.992188 L 57.691406 65.046875 L 4.878906 118.011719 C 3.246094 119.652344 2.757812 122.113281 3.644531 124.253906 C 4.527344 126.398438 6.613281 127.792969 8.921875 127.792969 L 101.414062 127.792969 C 102.851562 127.792969 104.238281 127.246094 105.296875 126.265625 L 160.859375 74.765625 L 160.859375 122.054688 C 160.859375 125.21875 163.417969 127.78125 166.570312 127.78125 L 283.605469 127.78125 C 285.117188 127.78125 286.574219 127.179688 287.644531 126.101562 L 344.601562 68.980469 C 346.835938 66.738281 346.835938 63.109375 344.601562 60.875 Z M 99.179688 116.328125 L 22.71875 116.328125 L 69.820312 69.097656 C 70.890625 68.023438 71.492188 66.5625 71.492188 65.042969 C 71.492188 63.523438 70.890625 62.066406 69.820312 60.992188 L 22.609375 13.671875 L 99.175781 13.671875 L 154.511719 65.042969 Z M 281.242188 116.324219 L 172.289062 116.324219 L 172.289062 13.675781 L 281.359375 13.675781 L 332.484375 64.933594 Z"/>
+              <circle :class="{ 'totem3-color': isActive('totem3')}" cx="262.039062" cy="64.996094" r="17.789062" fill="black"/>
+            </svg>
           </div>
-          <div class="content">
-            <p>LE CANARD</p>
-          </div>
+          <p :class="{ 'totem-active': isActive('totem3'), 'totem-inactive': !isActive('totem3') }">LE POISSON</p>
         </div>
-        <div class="result-box right" :class="{ active: isActive('totem2') }">
-          <div class="square-container">
-            <img class="rec poisson" src="@/assets/rec-poisson.png">
-            <div class="square">
-              <button> <img src="@/assets/POISSON.png"></button>
-            </div>
+        <div class="totem-place">
+          <div class="svg-container">
+            <svg :class="{ 'totem-active': isActive('totem4'), 'totem-inactive': !isActive('totem4') }" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 351 513" version="1.1">
+              <path :class="{ 'totem4-color': isActive('totem4')}" style="stroke:none;fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;" d="M 347.183594 168.691406 L 183.78125 5.746094 C 180.28125 2.253906 174.613281 2.253906 171.117188 5.746094 L 7.699219 168.691406 C 6.023438 170.363281 5.082031 172.640625 5.082031 175 L 5.082031 500.945312 C 5.082031 504.558594 7.261719 507.808594 10.613281 509.1875 C 11.722656 509.644531 12.886719 509.867188 14.039062 509.867188 C 16.363281 509.867188 18.65625 508.957031 20.375 507.253906 L 177.453125 350.617188 L 334.53125 507.253906 C 337.097656 509.8125 340.941406 510.574219 344.292969 509.1875 C 347.636719 507.808594 349.8125 504.546875 349.8125 500.945312 L 349.8125 175 C 349.8125 172.628906 348.871094 170.363281 347.195312 168.691406 Z M 331.902344 479.394531 L 183.78125 331.691406 C 180.28125 328.199219 174.613281 328.199219 171.117188 331.691406 L 22.984375 479.394531 L 22.984375 178.707031 L 177.453125 24.683594 L 331.910156 178.699219 L 331.910156 479.382812 Z M 260.050781 238.460938 C 274.539062 238.460938 286.269531 226.75 286.269531 212.300781 C 286.269531 197.855469 274.539062 186.144531 260.050781 186.144531 C 245.5625 186.144531 233.800781 197.855469 233.800781 212.300781 C 233.800781 226.75 245.5625 238.460938 260.050781 238.460938 Z M 94.875 186.144531 C 80.378906 186.144531 68.625 197.855469 68.625 212.300781 C 68.625 226.75 80.378906 238.460938 94.875 238.460938 C 109.375 238.460938 121.097656 226.75 121.097656 212.300781 C 121.097656 197.855469 109.351562 186.144531 94.875 186.144531 Z"/>
+              <circle :class="{ 'totem4-color': isActive('totem4')}" cx="260.050781" cy="212.300781" r="26.160156" fill="black"/>
+              <circle :class="{ 'totem4-color': isActive('totem4')}" cx="94.875" cy="212.300781" r="26.160156" fill="black"/>
+            </svg>
           </div>
-          <div class="content">
-            <p>LE POISSON</p>
-          </div>
-        </div>
-        <div class="result-box left" :class="{ active: isActive('totem3') }">
-          <div class="square-container">
-            <img class="rec poulpe" src="@/assets/rec-poulpe.png">
-            <div class="square">
-              <button>
-                <img src="@/assets/POULPE.png">
-              </button>
-            </div>
-          </div>
-          <div class="content">
-           <p>LE POULPE</p>
-          </div>
-        </div>
-        <div class="result-box right" :class="{ active: isActive('totem4') }">
-          <div class="square-container">
-            <img class="rec bateau" src="@/assets/rec-bateau.png">
-            <div class="square">
-              <button>
-                <img src="@/assets/BATEAU.png">
-              </button>
-            </div>
-          </div>
-          <div class="content">
-            <p>LE BATEAU</p>
-          </div>
+          <p :class="{ 'totem-active': isActive('totem4'), 'totem-inactive': !isActive('totem4') }">LE POULPE</p>
         </div>
       </div>
     </div>
+  </div>
 </template>
 
 <script>
@@ -67,4 +62,3 @@ export default {
   }
 };
 </script>
-

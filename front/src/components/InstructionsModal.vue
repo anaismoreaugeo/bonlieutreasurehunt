@@ -11,6 +11,7 @@
           mur digital de bonlieu !
         </p>
         <img src="../assets/wall_instructions.png" alt="" srcset="">
+        <button @click="closeModal" class="ui-btn-black">Continuer</button>
     </div>
 </template>
 
