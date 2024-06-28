@@ -2,7 +2,7 @@
   <div class="home">
     <div class="instruction">
         <h2 class="bold">LA CHASSE AUX TOTEMS EST OUVERTE ! </h2>
-        <p>TROUVEZ ET SCANNEZ UN TOTEM</P>
+        <p>TROUVEZ ET SCANNEZ UN TOTEM</p>
     </div>
     <div class="scanner-container">
       <div class="scanner-placeholder">
@@ -11,10 +11,10 @@
       </div>
     </div>
     <div class="line-container">
-    <div class="line"></div>
-    <div >OU</div>
-    <div class="line"></div>
-  </div>
+      <div class="line"></div>
+      <div>OU</div>
+      <div class="line"></div>
+    </div>
     <div class="code-input">
       <p>ENTREZ LE CODE</p>
       <input v-model="code" type="text" id="code" name="code" placeholder="X X X X">
@@ -26,18 +26,29 @@
       <div class="modal-header">{{ modalHeader }}</div>
     </template>
     <template #body>
-      <component :is="currentComponent"></component>
+      <component :is="currentComponent" @close="popCongratModal"></component>
     </template>
   </AppModal>
+  <!-- Modale de félicitations -->
+  <Modal v-if="showCongratsModal" @close="showCongratsModal = false">
+    <h1>Bravo !</h1>
+  </Modal>
+  <!-- Instruction Modale -->
+  <Modal v-if="showInstructionModal" @close="showInstructionModal = false">
+    <InstructionsModal @close="showInstructionModal = false"/>
+  </Modal>
 </template>
 
 <script>
+import { QrcodeStream } from 'vue-qrcode-reader';
+import { mapGetters } from 'vuex';
 import AppModal from '../components/AppModal.vue';
 import AppTotem1 from '../components/Games/AppTotem1.vue';
 import AppTotem2 from '../components/Games/AppTotem2.vue';
 import AppTotem3 from '../components/Games/AppTotem3.vue';
 import AppTotem4 from '../components/Games/AppTotem4.vue';
-import { QrcodeStream } from 'vue-qrcode-reader';
+import InstructionsModal from './InstructionsModal.vue';
+import Modal from './UnlockTotem.vue';
 
 export default {
   name: 'AppHome',
@@ -47,7 +58,9 @@ export default {
     AppTotem2,
     AppTotem3,
     AppTotem4,
-    QrcodeStream
+    QrcodeStream,
+    Modal,
+    InstructionsModal
   },
   data() {
     return {
@@ -55,8 +68,28 @@ export default {
       isModalOpen: false,
       modalHeader: '',
       currentComponent: null,
-      isScannerActive: false
+      isScannerActive: false,
+      showCongratsModal: false,
+      showInstructionModal: false // État de la modale d'instruction
     };
+  },
+  computed: {
+    ...mapGetters(['isActive'])
+  },
+  mounted() {
+    // Vérifie si un paramètre totemCode est présent dans l'URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const totemCode = urlParams.get('totemCode');
+
+    if (totemCode) {
+      this.code = totemCode;
+      this.checkCode();
+    }
+
+    // Vérifie si aucun totem n'est activé
+    if (!this.isActive('totem1') && !this.isActive('totem2') && !this.isActive('totem3') && !this.isActive('totem4')) {
+      this.showInstructionModal = true;
+    }
   },
   methods: {
     checkCode() {
@@ -120,10 +153,21 @@ export default {
     },
     onDetect(result) {
       console.log('QR code detected:', result);
-      console.log(JSON.stringify(result.map((code) => code.rawValue)));
-      this.code = result[0].rawValue;
-      this.isScannerActive = false;
-      this.checkCode();
+      const url = new URL(result[0].rawValue);
+      const params = new URLSearchParams(url.search);
+      const totemCode = params.get('totemCode');
+
+      if (totemCode) {
+        this.code = totemCode;
+        this.isScannerActive = false;
+        this.checkCode();
+      } else {
+        console.error('Paramètre totemCode non trouvé dans l\'URL');
+      }
+    },
+    popCongratModal() {
+      this.showCongratsModal = true;
+      this.isModalOpen = false;
     }
   }
 };
