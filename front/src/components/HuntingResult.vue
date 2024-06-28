@@ -17,19 +17,6 @@
         </div>
         <div class="totem-place">
           <div class="svg-container">
-            <svg :class="{ 'totem-active': isActive('totem2'), 'totem-inactive': !isActive('totem2') }" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 348 194" version="1.1">
-              <path :class="{'totem2-color': isActive('totem2')}" style="fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:4;" d="M 71.454315 51.555735 L 24.911997 51.555735 L 1.810693 27.522995 L 94.810401 27.522995 Z M 71.454315 51.555735 " transform="matrix(3.587629,0,0,3.592593,0,0)"/>
-              <path :class="{'totem2-color': isActive('totem2')}" style="fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:4;" d="M 24.79985 26.478093 L 48.310547 2.444265 L 71.822333 26.478093 " transform="matrix(3.587629,0,0,3.592593,0,0)"/>
-              <path :class="{'totem2-color': isActive('totem2')}" style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 42.563802 21.252497 C 43.717942 21.252497 44.653231 20.317413 44.653231 19.162693 C 44.653231 18.009061 43.717942 17.07289 42.563802 17.07289 C 41.409662 17.07289 40.473285 18.009061 40.473285 19.162693 C 40.473285 20.317413 41.409662 21.252497 42.563802 21.252497 Z M 42.563802 21.252497 " transform="matrix(3.587629,0,0,3.592593,0,0)"/>
-              <path :class="{'totem2-color': isActive('totem2')}" style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 55.10255 21.252497 C 56.25669 21.252497 57.193068 20.317413 57.193068 19.162693 C 57.193068 18.009061 56.25669 17.07289 55.10255 17.07289 C 53.948411 17.07289 53.013122 18.009061 53.013122 19.162693 C 53.013122 20.317413 53.948411 21.252497 55.10255 21.252497 Z M 55.10255 21.252497 " transform="matrix(3.587629,0,0,3.592593,0,0)"/>
-            </svg>
-          </div>
-          <p :class="{ 'totem-active': isActive('totem2'), 'totem-inactive': !isActive('totem2') }">L'EXTRATERRESTRE</p>
-        </div>
-      </div>
-      <div class="result-container-row">
-        <div class="totem-place">
-          <div class="svg-container">
             <svg :class="{ 'totem-active': isActive('totem3'), 'totem-inactive': !isActive('totem3') }" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 347 130" version="1.1">
               <path :class="{ 'totem3-color': isActive('totem3')}" style="stroke:none;fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;" d="M 344.601562 60.882812 L 287.765625 3.890625 C 286.695312 2.816406 285.238281 2.214844 283.722656 2.214844 L 166.570312 2.214844 C 163.417969 2.214844 160.859375 4.777344 160.859375 7.941406 L 160.859375 55.316406 L 105.296875 3.734375 C 104.238281 2.753906 102.855469 2.207031 101.414062 2.207031 L 8.804688 2.207031 C 6.496094 2.207031 4.414062 3.605469 3.527344 5.746094 C 2.640625 7.886719 3.128906 10.351562 4.765625 11.992188 L 57.691406 65.046875 L 4.878906 118.011719 C 3.246094 119.652344 2.757812 122.113281 3.644531 124.253906 C 4.527344 126.398438 6.613281 127.792969 8.921875 127.792969 L 101.414062 127.792969 C 102.851562 127.792969 104.238281 127.246094 105.296875 126.265625 L 160.859375 74.765625 L 160.859375 122.054688 C 160.859375 125.21875 163.417969 127.78125 166.570312 127.78125 L 283.605469 127.78125 C 285.117188 127.78125 286.574219 127.179688 287.644531 126.101562 L 344.601562 68.980469 C 346.835938 66.738281 346.835938 63.109375 344.601562 60.875 Z M 99.179688 116.328125 L 22.71875 116.328125 L 69.820312 69.097656 C 70.890625 68.023438 71.492188 66.5625 71.492188 65.042969 C 71.492188 63.523438 70.890625 62.066406 69.820312 60.992188 L 22.609375 13.671875 L 99.175781 13.671875 L 154.511719 65.042969 Z M 281.242188 116.324219 L 172.289062 116.324219 L 172.289062 13.675781 L 281.359375 13.675781 L 332.484375 64.933594 Z"/>
               <circle :class="{ 'totem3-color': isActive('totem3')}" cx="262.039062" cy="64.996094" r="17.789062" fill="black"/>
@@ -37,6 +24,8 @@
           </div>
           <p :class="{ 'totem-active': isActive('totem3'), 'totem-inactive': !isActive('totem3') }">LE POISSON</p>
         </div>
+      </div>
+      <div class="result-container-row">
         <div class="totem-place">
           <div class="svg-container">
             <svg :class="{ 'totem-active': isActive('totem4'), 'totem-inactive': !isActive('totem4') }" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 351 513" version="1.1">
@@ -46,6 +35,17 @@
             </svg>
           </div>
           <p :class="{ 'totem-active': isActive('totem4'), 'totem-inactive': !isActive('totem4') }">LE POULPE</p>
+        </div>
+        <div class="totem-place">
+          <div class="svg-container">
+            <svg :class="{ 'totem-active': isActive('totem2'), 'totem-inactive': !isActive('totem2') }" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 348 194" version="1.1">
+              <path :class="{'totem2-color': isActive('totem2')}" style="fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:4;" d="M 71.454315 51.555735 L 24.911997 51.555735 L 1.810693 27.522995 L 94.810401 27.522995 Z M 71.454315 51.555735 " transform="matrix(3.587629,0,0,3.592593,0,0)"/>
+              <path :class="{'totem2-color': isActive('totem2')}" style="fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:4;" d="M 24.79985 26.478093 L 48.310547 2.444265 L 71.822333 26.478093 " transform="matrix(3.587629,0,0,3.592593,0,0)"/>
+              <path :class="{'totem2-color': isActive('totem2')}" style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 42.563802 21.252497 C 43.717942 21.252497 44.653231 20.317413 44.653231 19.162693 C 44.653231 18.009061 43.717942 17.07289 42.563802 17.07289 C 41.409662 17.07289 40.473285 18.009061 40.473285 19.162693 C 40.473285 20.317413 41.409662 21.252497 42.563802 21.252497 Z M 42.563802 21.252497 " transform="matrix(3.587629,0,0,3.592593,0,0)"/>
+              <path :class="{'totem2-color': isActive('totem2')}" style="fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 55.10255 21.252497 C 56.25669 21.252497 57.193068 20.317413 57.193068 19.162693 C 57.193068 18.009061 56.25669 17.07289 55.10255 17.07289 C 53.948411 17.07289 53.013122 18.009061 53.013122 19.162693 C 53.013122 20.317413 53.948411 21.252497 55.10255 21.252497 Z M 55.10255 21.252497 " transform="matrix(3.587629,0,0,3.592593,0,0)"/>
+            </svg>
+          </div>
+          <p :class="{ 'totem-active': isActive('totem2'), 'totem-inactive': !isActive('totem2') }">L'EXTRATERRESTRE</p>
         </div>
       </div>
     </div>
