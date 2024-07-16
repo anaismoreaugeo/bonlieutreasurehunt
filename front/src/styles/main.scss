@@ -30,7 +30,8 @@ body, #app {
 }
 
 body {
-  overflow-y: hidden;
+  overflow-y: hidden !important;
+  height: 100% !important;
 }
 
 .instruction {

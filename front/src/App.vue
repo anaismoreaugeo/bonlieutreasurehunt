@@ -17,6 +17,11 @@ export default {
     AppHeader,
     AppFooter,
   },
+  mounted() {
+    document.addEventListener('touchmove', ev => {
+      ev.preventDefault()
+    }, { passive: false })
+  }
 };
 </script>
 
