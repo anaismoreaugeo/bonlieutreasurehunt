@@ -24,13 +24,14 @@ body, #app {
   box-sizing: border-box;
   font-family: 'MaisonRegular';
   font-size: 14px;
-  min-height: 100vh;
+  // min-height: 100vh;
+  overflow-y: hidden !important;
   display: flex;
   flex-direction: column;
 }
 
 body {
-  overflow-y: hidden !important;
+  //overflow-y: hidden !important;
   height: 100% !important;
 }
 
@@ -148,7 +149,7 @@ main {
 }
 .home {
   width: 100vw;
-  height: 100vh;
+  //height: 100vh;
   p {
     width: 80%;
     margin: 0 auto;
