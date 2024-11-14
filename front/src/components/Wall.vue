@@ -56,7 +56,9 @@ export default {
       murImages: [],
       intervalId: null, // Ajout de la propriété intervalId
       rows: ['1', '2', '3', '4', '5', '6'],
-      cols: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L']
+      cols: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L'],
+      fetchDelay: 10000, // Initial delay of 10 seconds
+      maxDelay: 60000, // Maximum delay of 60 seconds
     };
   },
   async created() {
@@ -75,17 +77,26 @@ export default {
   },
   methods: {
     async fetchLogos() {
-      console.log('fetchingLogo')
+      console.log('fetchingLogo');
       try {
         const result = await axios.get('/api/list-logos');
-
         const data = result.data.data;
         this.logos = data.logos;
         this.positions = data.positions;
+        this.fetchDelay = 10000; // Reset delay on success
       } catch (error) {
         console.error(error);
-        alert('Impossible de récupérer les logos.');
+        // alert('Impossible de récupérer les logos.');
+        this.fetchDelay = Math.min(this.fetchDelay * 2, this.maxDelay); // Exponential backoff
+      } finally {
+        this.startFetchInterval(); // Restart interval with updated delay
       }
+    },
+    startFetchInterval() {
+      if (this.intervalId) {
+        clearInterval(this.intervalId);
+      }
+      this.intervalId = setInterval(this.fetchLogos, this.fetchDelay);
     },
     getRandomImage() {
       const imageNumber = Math.floor(Math.random() * 12) + 1;
